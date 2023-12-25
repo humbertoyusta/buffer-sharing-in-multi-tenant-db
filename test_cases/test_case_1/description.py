@@ -98,4 +98,4 @@ tenants = [
     },
 ]
 
-total_buffer_size = sum([tenant['base_buffer_size'] for tenant in tenants]) * 0.8
+total_buffer_size = int(sum([tenant['base_buffer_size'] for tenant in tenants]) * 0.8)
