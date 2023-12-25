@@ -71,7 +71,7 @@ class Validator:
                     assert len(lines[3 + tenant_number + page_access].split()) == 2, "Page access line must contain two integers."
                     tenant_id, page_id = map(int, lines[3 + tenant_number + page_access].split())
                     assert tenant_id >= 1 and tenant_id <= tenant_number, "Tenant ID out of range."
-                    assert page_id >= 1 and page_id <= self.tenants[tenant_id - 1]['database_size'], "Page ID out of range."
+                    assert page_id >= 1 and page_id <= self.tenants[tenant_id - 1]['database_size'], f"Page ID {page_id} out of range."
                     page_accesses_per_tenant[tenant_id] += 1
 
                 for tenant in range(1, tenant_number + 1):
