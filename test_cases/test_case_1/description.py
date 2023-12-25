@@ -13,7 +13,7 @@ tenants = [
         'maximum_buffer_size': 5000,
         'page_accesses_dist': {
             'type': 'pareto',
-            'parameter': 0.2,
+            'parameter': 0.05,
             'length': 100000,
         },
         'pages_should_be_renumbered': False,
