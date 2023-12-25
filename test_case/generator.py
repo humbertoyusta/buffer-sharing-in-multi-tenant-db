@@ -95,8 +95,9 @@ class Generator:
 
             # Renumber pages if necessary, applying the permutation to the page access intervals
             if tenant['pages_should_be_renumbered']:
-                permutation = np.random.permutation(tenant['database_size'] + 1)
-                current_tenant_page_accesses[:, 0] = permutation[current_tenant_page_accesses[:, 0].astype(int)]
+                permutation = np.random.permutation(tenant['database_size']) + 1
+                
+                current_tenant_page_accesses[:, 0] = permutation[current_tenant_page_accesses[:, 0].astype(int) - 1]
 
             # Add tenant ID to the page accesses
             current_tenant_page_accesses = np.column_stack((
