@@ -1,8 +1,6 @@
 ## Description of the test case 1
 ## Five tenants following different distributions of page accesses
 
-total_buffer_size = int((2000 + 5000 + 500 + 3000 + 200) * 0.8)
-
 tenants = [
     {
         'tenant_id': 1,
@@ -99,3 +97,5 @@ tenants = [
         },
     },
 ]
+
+total_buffer_size = sum([tenant['base_buffer_size'] for tenant in tenants]) * 0.8
