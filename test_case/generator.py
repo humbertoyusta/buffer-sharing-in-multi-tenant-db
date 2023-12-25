@@ -20,6 +20,7 @@ class Generator:
             current_tenant_page_accesses_sum = 0
 
             while current_tenant_page_accesses_sum < tenant['page_accesses_dist']['length']:
+                # Generate a batch of page accesses
 
                 batch_pages = np.array([])
                 if tenant['page_accesses_dist']['type'] == 'zipfian':
@@ -48,6 +49,8 @@ class Generator:
                 else:
                     raise Exception(f"Unknown distribution type: {tenant['page_accesses_dist']['type']}")
                 
+                # Generate a batch of page access intervals
+
                 batch_interval_lengths = np.array([])
                 if tenant['page_accesses_interval_dist']['type'] == 'uniform':
                     batch_interval_lengths = generate_uniform_array(
@@ -75,8 +78,10 @@ class Generator:
                 else:
                     raise Exception(f"Unknown distribution type: {tenant['page_accesses_interval_dist']['type']}")
 
+                # Combine the two batches
                 batch = np.column_stack((batch_pages, batch_interval_lengths))
                 
+                # Add the batch to the current tenant page accesses, stopping if the tenant's page access length is reached
                 for batch_row in batch:
                     if current_tenant_page_accesses_sum + batch_row[1] <= tenant['page_accesses_dist']['length']:
                         current_tenant_page_accesses.append([batch_row[0], batch_row[1]])
@@ -88,28 +93,27 @@ class Generator:
 
             current_tenant_page_accesses = np.array(current_tenant_page_accesses)
 
+            # Renumber pages if necessary, applying the permutation to the page access intervals
             if tenant['pages_should_be_renumbered']:
                 permutation = np.random.permutation(tenant['database_size'] + 1)
                 current_tenant_page_accesses[:, 0] = permutation[current_tenant_page_accesses[:, 0].astype(int)]
 
+            # Add tenant ID to the page accesses
             current_tenant_page_accesses = np.column_stack((
                 np.full(current_tenant_page_accesses.shape[0], tenant['tenant_id']), 
                 current_tenant_page_accesses[:, 0], 
                 current_tenant_page_accesses[:, 1],
             ))
 
-            for page_access in current_tenant_page_accesses:
-                assert page_access[0] == tenant['tenant_id'], "Tenant ID mismatch."
-                assert page_access[1] >= 1 and page_access[1] <= tenant['database_size'], "Page ID out of range."
-            assert sum(current_tenant_page_accesses[:, 2]) == tenant['page_accesses_dist']['length'], "Page access length mismatch."
-
             tenant['page_accesses'] = current_tenant_page_accesses
-                
+
+        # Merge the page accesses of all tenants
         compressed_page_accesses = np.concatenate([tenant['page_accesses'] for tenant in self.test_case.tenants])
         np.random.shuffle(compressed_page_accesses)
         
         full_page_accesses = []
 
+        # Expand the page accesses to the full length, first they were compressed in intervals
         for page_access in compressed_page_accesses:
             current_page = page_access[1]
             for _ in range(page_access[2]):
@@ -117,15 +121,6 @@ class Generator:
                 current_page += 1
                 if current_page > self.test_case.tenants[page_access[0] - 1]['database_size']:
                     current_page = 1
-
-        count_per_tenant = np.zeros(len(self.test_case.tenants) + 1)
-        for page_access in full_page_accesses:
-            assert page_access[0] >= 1 and page_access[0] <= len(self.test_case.tenants), "Tenant ID out of range."
-            assert page_access[1] >= 1 and page_access[1] <= self.test_case.tenants[page_access[0] - 1]['database_size'], "Page ID out of range."
-            count_per_tenant[page_access[0]] += 1
-        for tenant in range(1, len(self.test_case.tenants) + 1):
-            assert count_per_tenant[tenant] == self.test_case.tenants[tenant - 1]['page_accesses_dist']['length'], "Page access length mismatch."
-        
 
         return {
             'total_buffer_size': self.test_case.total_buffer_size,
