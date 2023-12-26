@@ -43,7 +43,7 @@ class PageAccessesPlotter:
 
         for i in range(self.tenant_number):
             ax = axes[i // num_columns, i % num_columns]
-            sns.distplot(self.page_accesses_per_tenant[i + 1], ax=ax)
+            sns.kdeplot(self.page_accesses_per_tenant[i + 1], ax=ax)
             ax.set_title(f"Tenant {i + 1}")
 
         for i in range(self.tenant_number, num_columns * num_rows):
