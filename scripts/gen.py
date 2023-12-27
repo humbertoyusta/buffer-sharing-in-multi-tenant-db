@@ -1,7 +1,7 @@
-from test_case.validator import Validator
-from test_case.generator import Generator
-from test_case.io_wrapper import IoWrapper
-from test_case.page_accesses_plotter import PageAccessesPlotter
+from .test_case.validator import Validator
+from .test_case.generator import Generator
+from .test_case.io_wrapper import IoWrapper
+from .test_case.page_accesses_plotter import PageAccessesPlotter
 
 if __name__ == "__main__":
     for test_number in range(1, 15):

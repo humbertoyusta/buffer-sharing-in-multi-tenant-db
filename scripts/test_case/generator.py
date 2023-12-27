@@ -1,7 +1,7 @@
-from test_case.helpers import *
+from .helpers import *
 import numpy as np
 from importlib import import_module
-from test_case import constants
+from . import constants
 
 class Generator:
     def __init__(self, test_number: int):

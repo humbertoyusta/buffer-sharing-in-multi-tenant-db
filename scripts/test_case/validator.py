@@ -1,5 +1,5 @@
 from importlib import import_module
-from test_case import constants
+from . import constants
 
 
 class Validator:
