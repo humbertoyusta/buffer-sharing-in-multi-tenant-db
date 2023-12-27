@@ -50,6 +50,7 @@ class PageAccessesPlotter:
             axes[i // num_columns, i % num_columns].axis('off')
 
         plt.savefig(f"test_cases/test_case_{self.test_number}/page_accesses_distributions.png")
+        plt.close()
 
     def _renumber(self, page_accesses_per_tenant):
         current = 1
