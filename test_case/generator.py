@@ -10,6 +10,9 @@ class Generator:
         if self.test_case is None:
             raise ModuleNotFoundError(f"Test case {test_number} description does not exist.")
         self.total_buffer_size = self.test_case.total_buffer_size
+        self.merge_policy = self.test_case.merge_policy
+        self.min_batch_length = self.test_case.min_batch_length
+        self.max_batch_length = self.test_case.max_batch_length
         self.tenants = self.test_case.tenants
         self.input_file = f"test_cases/test_case_{test_number}/input.txt"
         np.random.seed(0)
@@ -108,9 +111,7 @@ class Generator:
 
             tenant['page_accesses'] = current_tenant_page_accesses
 
-        # Merge the page accesses of all tenants
-        compressed_page_accesses = np.concatenate([tenant['page_accesses'] for tenant in self.test_case.tenants])
-        np.random.shuffle(compressed_page_accesses)
+        compressed_page_accesses = self._merge_page_accesses()
         
         full_page_accesses = []
 
@@ -128,4 +129,28 @@ class Generator:
             'tenants': self.test_case.tenants,
             'page_accesses': np.array(full_page_accesses),
         }
+    
+    def _merge_page_accesses(self):
+        if self.merge_policy == "full_merge_and_shuffle":
+            compressed_page_accesses = np.concatenate([tenant['page_accesses'] for tenant in self.test_case.tenants])
+            np.random.shuffle(compressed_page_accesses)
+        elif self.merge_policy == "batch_merge":
+            compressed_page_accesses = []
+            offsets = np.zeros(len(self.test_case.tenants) + 1, dtype=int)
+            tenants_with_remaining_pages = [tenant['tenant_id'] for tenant in self.test_case.tenants]
+            while len(tenants_with_remaining_pages) > 0:
+                selected_tenant_id = np.random.choice(tenants_with_remaining_pages)
+                batch_length = min(np.random.randint(self.min_batch_length, self.max_batch_length + 1), self.test_case.tenants[selected_tenant_id - 1]['page_accesses'].shape[0] - offsets[selected_tenant_id])
+                batch = self.test_case.tenants[selected_tenant_id - 1]['page_accesses'][offsets[selected_tenant_id]:offsets[selected_tenant_id] + batch_length]
+                compressed_page_accesses.extend(batch)
+                
+                offsets[selected_tenant_id] += batch_length
+                if offsets[selected_tenant_id] == self.test_case.tenants[selected_tenant_id - 1]['page_accesses'].shape[0]:
+                    tenants_with_remaining_pages.remove(selected_tenant_id)
+        else:
+            raise Exception(f"Unknown merge policy: {self.merge_policy}")
+        
+        return np.array(compressed_page_accesses)
+
+
             
