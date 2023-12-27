@@ -99,4 +99,8 @@ tenants = [
     },
 ]
 
+merge_policy = "full_merge_and_shuffle"
+min_batch_length = 1
+max_batch_length = 1
+
 total_buffer_size = int(sum([tenant['base_buffer_size'] for tenant in tenants]) * 0.8)
