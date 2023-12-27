@@ -1,4 +1,4 @@
-## Description of the test case 6
+## Description of the test case 7
 ## Ten tenants following different distributions of page accesses
 
 tenants = [

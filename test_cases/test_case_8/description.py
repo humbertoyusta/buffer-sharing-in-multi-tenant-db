@@ -1,5 +1,6 @@
-## Description of the test case 6
-## Ten tenants following different distributions of page accesses
+## Description of the test case 8
+## Ten tenants following different distributions of page accesses,
+## Like test 7, but with bigger buffer sizes
 
 tenants = [
     {
