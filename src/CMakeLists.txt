@@ -2,6 +2,8 @@ add_library(src
     types/tenant.cpp
     types/page_access.cpp
     input_reader.cpp
+    single_lru_cache.cpp
+    checker.cpp
 )
 
 target_include_directories(src PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
