@@ -16,7 +16,7 @@ void LruPolicy1Solution::Init(const std::vector<Tenant> &tenants,
   cache_used_per_tenant_.clear();
 
   for (const auto &tenant : tenants) {
-    judge_caches_.emplace_back(total_buffer_size);
+    judge_caches_.emplace_back(tenant.base_buffer_size);
     faults_in_judge_.push_back(0);
     faults_in_solution_.push_back(0);
     cache_used_per_tenant_.push_back(0);
@@ -67,8 +67,9 @@ std::pair<int, bool> LruPolicy1Solution::AccessPage(PageAccess page_access) {
     }
 
     for (int i = 0; i < tenants_.size(); ++i) {
-      if (cache_used_per_tenant_[i] <= tenants_[i].min_buffer_size &&
-          i + 1 != page_access.tenant_id) {
+      if (cache_used_per_tenant_[i] < tenants_[i].min_buffer_size ||
+          (cache_used_per_tenant_[i] == tenants_[i].min_buffer_size &&
+           i + 1 != page_access.tenant_id)) {
         tenant_scores[i] = INT_MIN;
       }
       if (cache_used_per_tenant_[page_access.tenant_id - 1] >=
@@ -78,6 +79,9 @@ std::pair<int, bool> LruPolicy1Solution::AccessPage(PageAccess page_access) {
       }
     }
 
+    assert(*std::max_element(tenant_scores.begin(), tenant_scores.end()) !=
+           INT_MIN);
+
     int tenant_id_to_evict =
         std::max_element(tenant_scores.begin(), tenant_scores.end()) -
         tenant_scores.begin() + 1;
@@ -85,11 +89,16 @@ std::pair<int, bool> LruPolicy1Solution::AccessPage(PageAccess page_access) {
     std::pair<int, int> evicted_page =
         lru_cache_.EvictLeastRecentlyUsedPage(tenant_id_to_evict);
 
-    ++faults_in_solution_[tenant_id_to_evict - 1];
     --cache_used_per_tenant_[tenant_id_to_evict - 1];
 
     lru_cache_.AddPage(page_access, evicted_page.second);
+
     ++cache_used_per_tenant_[page_access.tenant_id - 1];
+
+    ++faults_in_solution_[page_access.tenant_id - 1];
+
+    assert(cache_used_per_tenant_[tenant_id_to_evict - 1] >=
+           tenants_[tenant_id_to_evict - 1].min_buffer_size);
 
     return {evicted_page.second, false};
   }
