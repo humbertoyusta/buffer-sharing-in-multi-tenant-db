@@ -5,6 +5,7 @@
 #include "types/tenant.h"
 #include <list>
 #include <queue>
+#include <unordered_map>
 #include <vector>
 
 class Lru {
@@ -58,9 +59,9 @@ private:
       pages_lists_; // Vector of double linked lists, for LRU cache per tenant,
                     // storing pairs of page id and buffer locations
   std::vector<std::unordered_map<int, std::list<std::pair<int, int>>::iterator>>
-      pages_map_; // Vector of maps, for LRU cache per tenant, storing page id
-                  // and iterator to the corresponding page in the double linked
-                  // list
+      pages_maps_; // Vector of maps, for LRU cache per tenant, storing page id
+                   // and iterator to the corresponding page in the double
+                   // linked list
 };
 
 #endif // LRU_H
