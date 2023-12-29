@@ -2,11 +2,13 @@
 #include "single_lru_cache.h"
 #include <assert.h>
 #include <iostream>
+#include <vector>
 
-void Checker::CheckSolution(Solution *solution,
-                            const std::vector<Tenant> &tenants,
-                            const std::vector<PageAccess> &page_accesses,
-                            int total_buffer_size) {
+std::tuple<std::vector<int>, std::vector<int>, std::vector<int>,
+           std::vector<int>>
+Checker::CheckSolution(Solution *solution, const std::vector<Tenant> &tenants,
+                       const std::vector<PageAccess> &page_accesses,
+                       int total_buffer_size) {
   // Initialize the solution
   solution->Init(tenants, total_buffer_size);
 
@@ -120,4 +122,8 @@ void Checker::CheckSolution(Solution *solution,
                         solution_page_faults_per_tenant[tenant.tenant_id - 1])
         << "\n";
   }
+
+  return std::make_tuple(
+      judge_page_hits_per_tenant, judge_page_faults_per_tenant,
+      solution_page_hits_per_tenant, solution_page_faults_per_tenant);
 }
