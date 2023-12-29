@@ -11,7 +11,7 @@ public:
 
   virtual ~Solution() {}
 
-  virtual void init(const std::vector<Tenant> &tenants,
+  virtual void Init(const std::vector<Tenant> &tenants,
                     int total_buffer_size) = 0;
 
   /**
@@ -24,6 +24,7 @@ public:
 
 protected:
   std::vector<Tenant> tenants_;
+  int total_buffer_size_;
 };
 
 #endif // SOLUTION_H
