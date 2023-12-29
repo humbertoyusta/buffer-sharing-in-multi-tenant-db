@@ -1,6 +1,6 @@
 #include "checker.h"
 #include "single_lru_cache.h"
-
+#include <assert.h>
 #include <iostream>
 
 void Checker::CheckSolution(Solution *solution,
@@ -22,6 +22,9 @@ void Checker::CheckSolution(Solution *solution,
   std::vector<int> judge_page_faults_per_tenant(tenants.size(), 0);
   std::vector<int> solution_page_faults_per_tenant(tenants.size(), 0);
 
+  std::vector<PageAccess> solution_buffer(total_buffer_size);
+  std::vector<int> solution_buffer_size_used_per_tenant(tenants.size(), 0);
+
   // Check each page access
   for (const auto &page_access : page_accesses) {
     // Get the tenant
@@ -35,6 +38,48 @@ void Checker::CheckSolution(Solution *solution,
 
     // Access the page in the solution cache
     auto solution_result = solution->AccessPage(page_access);
+
+    // Check the solution result
+    if (solution_result.second) {
+      // If it was a hit, check that the page is in the solution buffer in the
+      // correct location
+      assert(solution_buffer[solution_result.first] == page_access);
+    } else {
+      // If it was a fault, and the buffer is not full, check that
+      // the tenant has not exceeded its max buffer size
+      if (solution_buffer[solution_result.first].tenant_id == 0) {
+        solution_buffer_size_used_per_tenant[page_access.tenant_id - 1]++;
+        assert(
+            solution_buffer_size_used_per_tenant[page_access.tenant_id - 1] <=
+            tenant.max_buffer_size);
+      }
+      // If it was a fault, and it was evicted from the same tenant, check that
+      // the tenant has at least its min buffer size
+      else if (solution_buffer[solution_result.first].tenant_id ==
+               tenant.tenant_id) {
+        assert(
+            solution_buffer_size_used_per_tenant[page_access.tenant_id - 1] >=
+            tenant.min_buffer_size);
+      } else {
+        // If it was a fault, and it was evicted from a different tenant, check
+        // that the tenant that was evicted has at least its min buffer size
+        solution_buffer_size_used_per_tenant
+            [solution_buffer[solution_result.first].tenant_id - 1]--;
+        assert(solution_buffer_size_used_per_tenant
+                   [solution_buffer[solution_result.first].tenant_id - 1] >=
+               tenants[solution_buffer[solution_result.first].tenant_id - 1]
+                   .min_buffer_size);
+
+        // Check that the tenant that is accessing the page has not exceeded its
+        // max buffer size
+        solution_buffer_size_used_per_tenant[page_access.tenant_id - 1]++;
+        assert(
+            solution_buffer_size_used_per_tenant[page_access.tenant_id - 1] <=
+            tenant.max_buffer_size);
+      }
+    }
+    // Update the solution buffer
+    solution_buffer[solution_result.first] = page_access;
 
     // Update the number of hits for the judge cache
     if (judge_result.second) {
