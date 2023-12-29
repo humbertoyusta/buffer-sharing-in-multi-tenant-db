@@ -48,6 +48,7 @@ std::pair<int, bool> LruPolicy1Solution::AccessPage(PageAccess page_access) {
             tenants_[page_access.tenant_id - 1].max_buffer_size) {
       lru_cache_.AddPage(page_access, available_location);
       ++cache_used_per_tenant_[page_access.tenant_id - 1];
+      ++faults_in_solution_[page_access.tenant_id - 1];
       return {available_location, false};
     }
 
