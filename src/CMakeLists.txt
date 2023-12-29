@@ -4,6 +4,8 @@ add_library(src
     input_reader.cpp
     single_lru_cache.cpp
     checker.cpp
+    solutions/cache_eviction_algorithms/lru.cpp
+    solutions/lru_policy_1_solution.cpp
 )
 
 target_include_directories(src PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
