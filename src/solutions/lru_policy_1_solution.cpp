@@ -1,6 +1,7 @@
 #include "lru_policy_1_solution.h"
 #include "tenant_selection_policies/fault_ratio_cache_used_ratio_policy.h"
 #include <assert.h>
+#include <iostream>
 
 void LruPolicy1Solution::Init(const std::vector<Tenant> &tenants,
                               int total_buffer_size) {
@@ -52,13 +53,17 @@ std::pair<int, bool> LruPolicy1Solution::AccessPage(PageAccess page_access) {
 
     std::vector<double> tenant_scores;
     for (const auto &tenant : tenants_) {
-      assert(faults_in_judge_[tenant.tenant_id - 1] != 0);
-      assert(tenant.base_buffer_size != 0);
-      tenant_scores.push_back(tenant_selection_policy_.TenantScore(
-          faults_in_solution_[tenant.tenant_id - 1],
-          faults_in_judge_[tenant.tenant_id - 1],
-          cache_used_per_tenant_[tenant.tenant_id - 1], tenant.base_buffer_size,
-          tenant.priority));
+      if (faults_in_judge_[tenant.tenant_id - 1] == 0 ||
+          tenant.base_buffer_size == 0) {
+        tenant_scores.push_back(INT_MIN);
+        continue;
+      } else {
+        tenant_scores.push_back(tenant_selection_policy_.TenantScore(
+            faults_in_solution_[tenant.tenant_id - 1],
+            faults_in_judge_[tenant.tenant_id - 1],
+            cache_used_per_tenant_[tenant.tenant_id - 1],
+            tenant.base_buffer_size, tenant.priority));
+      }
     }
 
     for (int i = 0; i < tenants_.size(); ++i) {
@@ -69,7 +74,7 @@ std::pair<int, bool> LruPolicy1Solution::AccessPage(PageAccess page_access) {
       if (cache_used_per_tenant_[page_access.tenant_id - 1] >=
               tenants_[page_access.tenant_id - 1].max_buffer_size &&
           i + 1 != page_access.tenant_id) {
-        tenant_scores[page_access.tenant_id - 1] = INT_MIN;
+        tenant_scores[i] = INT_MIN;
       }
     }
 
