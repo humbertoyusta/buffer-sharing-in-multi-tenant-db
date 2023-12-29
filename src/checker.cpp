@@ -3,24 +3,24 @@
 
 #include <iostream>
 
-void Checker::CheckSolution(/*Solution *solution,*/
+void Checker::CheckSolution(Solution *solution,
                             const std::vector<Tenant> &tenants,
                             const std::vector<PageAccess> &page_accesses,
                             int total_buffer_size) {
   // Initialize the solution
-  // solution->init(tenants, total_buffer_size);
+  solution->Init(tenants, total_buffer_size);
 
   // Initialize the cache
   std::vector<SingleLruCache> judge_caches;
   for (const auto &tenant : tenants) {
-    judge_caches.emplace_back(tenant.max_buffer_size);
+    judge_caches.emplace_back(tenant.base_buffer_size);
   }
 
-  std::vector<int> judge_cache_hits_per_tenant(tenants.size(), 0);
-  // std::vector<int> solution_cache_hits_per_tenant(tenants.size(), 0);
+  std::vector<int> judge_page_hits_per_tenant(tenants.size(), 0);
+  std::vector<int> solution_page_hits_per_tenant(tenants.size(), 0);
 
-  std::vector<int> judge_cache_misses_per_tenant(tenants.size(), 0);
-  // std::vector<int> solution_cache_misses_per_tenant(tenants.size(), 0);
+  std::vector<int> judge_page_faults_per_tenant(tenants.size(), 0);
+  std::vector<int> solution_page_faults_per_tenant(tenants.size(), 0);
 
   // Check each page access
   for (const auto &page_access : page_accesses) {
@@ -34,34 +34,45 @@ void Checker::CheckSolution(/*Solution *solution,*/
     auto judge_result = judge_cache.AccessPage(page_access.page_id);
 
     // Access the page in the solution cache
-    // auto solution_result = solution->AccessPage(page_access);
+    auto solution_result = solution->AccessPage(page_access);
 
     // Update the number of hits for the judge cache
     if (judge_result.second) {
-      judge_cache_hits_per_tenant[page_access.tenant_id - 1]++;
+      judge_page_hits_per_tenant[page_access.tenant_id - 1]++;
     } else {
-      judge_cache_misses_per_tenant[page_access.tenant_id - 1]++;
+      judge_page_faults_per_tenant[page_access.tenant_id - 1]++;
     }
 
     // Update the number of hits for the solution cache
-    // if (solution_result.second) {
-    //   solution_cache_hits_per_tenant[page_access.tenant_id - 1]++;
-    // } else {
-    //   solution_cache_misses_per_tenant[page_access.tenant_id - 1]++;
-    // }
+    if (solution_result.second) {
+      solution_page_hits_per_tenant[page_access.tenant_id - 1]++;
+    } else {
+      solution_page_faults_per_tenant[page_access.tenant_id - 1]++;
+    }
   }
 
   for (const auto &tenant : tenants) {
     std::cout << "Tenant " << tenant.tenant_id << ":\n";
     std::cout << "  Judge hits: "
-              << judge_cache_hits_per_tenant[tenant.tenant_id - 1] << "\n";
-    std::cout << "  Judge misses: "
-              << judge_cache_misses_per_tenant[tenant.tenant_id - 1] << "\n";
+              << judge_page_hits_per_tenant[tenant.tenant_id - 1] << "\n";
+    std::cout << "  Judge faults: "
+              << judge_page_faults_per_tenant[tenant.tenant_id - 1] << "\n";
     std::cout
         << "  Judge hit rate: "
-        << (double)judge_cache_hits_per_tenant[tenant.tenant_id - 1] /
-               (double)(judge_cache_hits_per_tenant[tenant.tenant_id - 1] +
-                        judge_cache_misses_per_tenant[tenant.tenant_id - 1])
+        << (double)judge_page_hits_per_tenant[tenant.tenant_id - 1] /
+               (double)(judge_page_hits_per_tenant[tenant.tenant_id - 1] +
+                        judge_page_faults_per_tenant[tenant.tenant_id - 1])
+        << "\n";
+
+    std::cout << "  Solution hits: "
+              << solution_page_hits_per_tenant[tenant.tenant_id - 1] << "\n";
+    std::cout << "  Solution faults: "
+              << solution_page_faults_per_tenant[tenant.tenant_id - 1] << "\n";
+    std::cout
+        << "  Solution hit rate: "
+        << (double)solution_page_hits_per_tenant[tenant.tenant_id - 1] /
+               (double)(solution_page_hits_per_tenant[tenant.tenant_id - 1] +
+                        solution_page_faults_per_tenant[tenant.tenant_id - 1])
         << "\n";
   }
 }

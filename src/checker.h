@@ -7,7 +7,7 @@ class Checker {
 public:
   Checker() {}
 
-  static void CheckSolution(/*Solution *solution,*/
+  static void CheckSolution(Solution *solution,
                             const std::vector<Tenant> &tenants,
                             const std::vector<PageAccess> &page_accesses,
                             int total_buffer_size);
