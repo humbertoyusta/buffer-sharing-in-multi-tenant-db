@@ -24,7 +24,7 @@ Checker::CheckSolution(Solution *solution, const std::vector<Tenant> &tenants,
   std::vector<int> judge_page_faults_per_tenant(tenants.size(), 0);
   std::vector<int> solution_page_faults_per_tenant(tenants.size(), 0);
 
-  std::vector<PageAccess> solution_buffer(total_buffer_size);
+  std::vector<PageAccess> solution_buffer(total_buffer_size + 1);
   std::vector<int> solution_buffer_size_used_per_tenant(tenants.size(), 0);
 
   // Check each page access
