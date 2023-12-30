@@ -1,3 +1,5 @@
+find_package(yaml-cpp REQUIRED)
+
 add_library(src
     types/tenant.cpp
     types/page_access.cpp
@@ -6,7 +8,10 @@ add_library(src
     checker.cpp
     solutions/cache_eviction_algorithms/lru.cpp
     solutions/lru_policy_1_solution.cpp
+    scorer.cpp
 )
+
+target_link_libraries(src PUBLIC yaml-cpp::yaml-cpp)
 
 target_include_directories(src PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

@@ -1,0 +1,106 @@
+#include "scorer.h"
+#include <fstream>
+#include <iostream>
+#include <numeric>
+#include <yaml-cpp/yaml.h>
+
+Scorer::Scorer(std::string solution_name) : solution_name_(solution_name) {}
+
+double Scorer::ratio(const int a, const int b) {
+  return static_cast<double>(a) / static_cast<double>(b);
+}
+
+double Scorer::square(const double a) { return a * a; }
+
+TestScore
+Scorer::GetTestScore(std::vector<Tenant> tenants,
+                     std::vector<int> judge_page_hits_per_tenant,
+                     std::vector<int> judge_page_faults_per_tenant,
+                     std::vector<int> solution_page_hits_per_tenant,
+                     std::vector<int> solution_page_faults_per_tenant) {
+  TestScore test_score;
+
+  for (int i = 0; i < tenants.size(); i++) {
+    double fault_service_level_agreement_rate =
+        ratio(std::max(solution_page_faults_per_tenant[i] -
+                           judge_page_faults_per_tenant[i],
+                       0),
+              judge_page_faults_per_tenant[i]);
+    test_score.tenant_fault_scores.push_back(
+        square(fault_service_level_agreement_rate));
+  }
+
+  int tenant_priority_sum = std::accumulate(
+      tenants.begin(), tenants.end(), 0,
+      [](int sum, const Tenant &t) { return sum + t.priority; });
+
+  for (int i = 0; i < tenants.size(); i++) {
+    test_score.total_fault_score +=
+        test_score.tenant_fault_scores[i] * (double)tenants[i].priority;
+  }
+
+  test_score.total_fault_score /= (double)tenant_priority_sum;
+
+  for (int i = 0; i < tenants.size(); i++) {
+    double hit_service_level_agreement_rate =
+        ratio(std::max(judge_page_hits_per_tenant[i] -
+                           solution_page_hits_per_tenant[i],
+                       0),
+              judge_page_hits_per_tenant[i]);
+    test_score.tenant_hit_scores.push_back(
+        square(hit_service_level_agreement_rate));
+  }
+
+  for (int i = 0; i < tenants.size(); i++) {
+    test_score.total_hit_score +=
+        test_score.tenant_hit_scores[i] * (double)tenants[i].priority;
+  }
+
+  test_score.total_hit_score /= (double)tenant_priority_sum;
+
+  return test_score;
+}
+
+void Scorer::ReportScores(std::vector<TestScore> test_scores) {
+  double mean_fault_score = 0;
+  double mean_hit_score = 0;
+
+  for (auto test_score : test_scores) {
+    mean_fault_score += test_score.total_fault_score;
+    mean_hit_score += test_score.total_hit_score;
+  }
+
+  mean_fault_score /= test_scores.size();
+  mean_hit_score /= test_scores.size();
+
+  std::string filepath = "results/" + solution_name_ + ".yaml";
+  YAML::Emitter out;
+  out << YAML::BeginMap;
+  out << YAML::Key << "mean_fault_score" << YAML::Value << mean_fault_score;
+  out << YAML::Key << "mean_hit_score" << YAML::Value << mean_hit_score;
+  out << YAML::Key << "test_scores" << YAML::Value << YAML::BeginSeq;
+  for (auto test_score : test_scores) {
+    out << YAML::BeginMap;
+    out << YAML::Key << "total_fault_score" << YAML::Value
+        << test_score.total_fault_score;
+    out << YAML::Key << "tenant_fault_scores" << YAML::Value << YAML::BeginSeq;
+    for (auto tenant_fault_score : test_score.tenant_fault_scores) {
+      out << tenant_fault_score;
+    }
+    out << YAML::EndSeq;
+    out << YAML::Key << "total_hit_score" << YAML::Value
+        << test_score.total_hit_score;
+    out << YAML::Key << "tenant_hit_scores" << YAML::Value << YAML::BeginSeq;
+    for (auto tenant_hit_score : test_score.tenant_hit_scores) {
+      out << tenant_hit_score;
+    }
+    out << YAML::EndSeq;
+    out << YAML::EndMap;
+  }
+  out << YAML::EndSeq;
+  out << YAML::EndMap;
+
+  std::ofstream file(filepath);
+  file << out.c_str();
+  file.close();
+}
