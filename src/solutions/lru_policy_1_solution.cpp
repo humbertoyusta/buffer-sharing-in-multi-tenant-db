@@ -71,20 +71,20 @@ std::pair<int, bool> LruPolicy1Solution::AccessPage(PageAccess page_access) {
       if (cache_used_per_tenant_[i] < tenants_[i].min_buffer_size ||
           (cache_used_per_tenant_[i] == tenants_[i].min_buffer_size &&
            i + 1 != page_access.tenant_id)) {
-        tenant_scores[i] = INT_MIN;
+        tenant_scores[i] = INT_MAX;
       }
       if (cache_used_per_tenant_[page_access.tenant_id - 1] >=
               tenants_[page_access.tenant_id - 1].max_buffer_size &&
           i + 1 != page_access.tenant_id) {
-        tenant_scores[i] = INT_MIN;
+        tenant_scores[i] = INT_MAX;
       }
     }
 
-    assert(*std::max_element(tenant_scores.begin(), tenant_scores.end()) !=
-           INT_MIN);
+    assert(*std::min_element(tenant_scores.begin(), tenant_scores.end()) !=
+           INT_MAX);
 
     int tenant_id_to_evict =
-        std::max_element(tenant_scores.begin(), tenant_scores.end()) -
+        std::min_element(tenant_scores.begin(), tenant_scores.end()) -
         tenant_scores.begin() + 1;
 
     std::pair<int, int> evicted_page =
