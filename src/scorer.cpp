@@ -1,4 +1,5 @@
 #include "scorer.h"
+#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <numeric>
@@ -27,19 +28,19 @@ Scorer::GetTestScore(std::vector<Tenant> tenants,
                        0),
               judge_page_faults_per_tenant[i]);
     test_score.tenant_fault_scores.push_back(
-        square(fault_service_level_agreement_rate));
+        (fault_service_level_agreement_rate));
   }
 
-  int tenant_priority_sum = std::accumulate(
+  double tenant_priority_sum_of_sqrt = std::accumulate(
       tenants.begin(), tenants.end(), 0,
-      [](int sum, const Tenant &t) { return sum + t.priority; });
+      [](double sum, const Tenant &t) { return sum + std::sqrt(t.priority); });
 
   for (int i = 0; i < tenants.size(); i++) {
-    test_score.total_fault_score +=
-        test_score.tenant_fault_scores[i] * (double)tenants[i].priority;
+    test_score.total_fault_score += test_score.tenant_fault_scores[i] *
+                                    std::sqrt((double)tenants[i].priority);
   }
 
-  test_score.total_fault_score /= (double)tenant_priority_sum;
+  test_score.total_fault_score /= tenant_priority_sum_of_sqrt;
 
   for (int i = 0; i < tenants.size(); i++) {
     double hit_service_level_agreement_rate =
@@ -47,16 +48,15 @@ Scorer::GetTestScore(std::vector<Tenant> tenants,
                            solution_page_hits_per_tenant[i],
                        0),
               judge_page_hits_per_tenant[i]);
-    test_score.tenant_hit_scores.push_back(
-        square(hit_service_level_agreement_rate));
+    test_score.tenant_hit_scores.push_back((hit_service_level_agreement_rate));
   }
 
   for (int i = 0; i < tenants.size(); i++) {
-    test_score.total_hit_score +=
-        test_score.tenant_hit_scores[i] * (double)tenants[i].priority;
+    test_score.total_hit_score += test_score.tenant_hit_scores[i] *
+                                  std::sqrt((double)tenants[i].priority);
   }
 
-  test_score.total_hit_score /= (double)tenant_priority_sum;
+  test_score.total_hit_score /= tenant_priority_sum_of_sqrt;
 
   return test_score;
 }
