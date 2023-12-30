@@ -1,0 +1,9 @@
+{
+    "version": 4,
+    "vendor": {
+        "conan": {}
+    },
+    "include": [
+        "/Users/humbertoyusta/classes/buffer-sharing-in-multi-tenant-db/build/CMakePresets.json"
+    ]
+}
