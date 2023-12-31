@@ -9,17 +9,16 @@ tenants = [
         'minimum_buffer_size': 10000,
         'base_buffer_size': 30000,
         'maximum_buffer_size': 100000,
-        'page_accesses_dist': {
+        'page_accesses_dist': [
+          {
             'type': 'normal',
             'variance': 10000,
-            'length': 750000,
-        },
-        'pages_should_be_renumbered': False,
-        'page_accesses_interval_dist': {
-            'type': 'uniform',
-            'length': 750000,
-            'max_value': 1,
-        },
+            'length': 75000,
+            'interval_type': 'uniform', 
+            'interval_max_value': 1,
+          },
+        ] * 10,
+        'pages_should_be_renumbered': True,
     },
     {
         'tenant_id': 2,
@@ -28,17 +27,16 @@ tenants = [
         'minimum_buffer_size': 1000,
         'base_buffer_size': 3000,
         'maximum_buffer_size': 10000,
-        'page_accesses_dist': {
+        'page_accesses_dist': [
+          {
             'type': 'pareto',
             'parameter': 0.05,
             'length': 40000,
-        },
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+        ],
         'pages_should_be_renumbered': False,
-        'page_accesses_interval_dist': {
-            'type': 'uniform',
-            'length': 40000,
-            'max_value': 1,
-        },
     },
     {
         'tenant_id': 3,
@@ -47,16 +45,15 @@ tenants = [
         'minimum_buffer_size': 1500,
         'base_buffer_size': 5000,
         'maximum_buffer_size': 12500,
-        'page_accesses_dist': {
+        'page_accesses_dist': [
+          {
             'type': 'uniform',
             'length': 80000,
-        },
+            'interval_type': 'uniform',
+            'interval_max_value': 10,
+          },
+        ],
         'pages_should_be_renumbered': True,
-        'page_accesses_interval_dist': {
-            'type': 'uniform',
-            'length': 80000,
-            'max_value': 10,
-        },
     },
     {
         'tenant_id': 4,
@@ -65,17 +62,16 @@ tenants = [
         'minimum_buffer_size': 800,
         'base_buffer_size': 2000,
         'maximum_buffer_size': 5000,
-        'page_accesses_dist': {
+        'page_accesses_dist': [
+          {
             'type': 'zipfian',
             'parameter': 1.01,
             'length': 30000,
-        },
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+        ],  
         'pages_should_be_renumbered': False,
-        'page_accesses_interval_dist': {
-            'type': 'uniform',
-            'length': 30000,
-            'max_value': 1,
-        },
     },
     {
         'tenant_id': 5,
@@ -84,17 +80,16 @@ tenants = [
         'minimum_buffer_size': 1500,
         'base_buffer_size': 5000,
         'maximum_buffer_size': 12500,
-        'page_accesses_dist': {
+        'page_accesses_dist': [
+          {
             'type': 'pareto',
             'parameter': 0.04,
             'length': 100000,
-        },
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+        ],
         'pages_should_be_renumbered': False,
-        'page_accesses_interval_dist': {
-            'type': 'uniform',
-            'length': 100000,
-            'max_value': 1,
-        },
     },
 ]
 
