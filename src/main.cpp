@@ -29,10 +29,16 @@ int main(int argc, char **argv) {
       return 1;
     }
 
+    std::cout << "Running test " << test_number << " with solution "
+              << solution_name << std::endl;
+
     auto [judge_page_hits_per_tenant, judge_page_faults_per_tenant,
           solution_page_hits_per_tenant, solution_page_faults_per_tenant] =
         checker.CheckSolution(solution, tenants, page_accesses,
                               total_buffer_size);
+
+    std::cout << "Test " << test_number << " with solution " << solution_name
+              << " finished" << std::endl;
 
     test_scores.push_back(scorer.GetTestScore(
         tenants, judge_page_hits_per_tenant, judge_page_faults_per_tenant,
