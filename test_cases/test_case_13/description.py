@@ -9,17 +9,37 @@ tenants = [
         'minimum_buffer_size': 10000,
         'base_buffer_size': 20000,
         'maximum_buffer_size': 50000,
-        'page_accesses_dist': {
+        'page_accesses_dist': [
+          {
             'type': 'pareto',
             'parameter': 0.04,
-            'length': 740000,
-        },
-        'pages_should_be_renumbered': False,
-        'page_accesses_interval_dist': {
-            'type': 'uniform',
-            'length': 740000,
-            'max_value': 1,
-        },
+            'length': 160000,
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+          {
+            'type': 'pareto',
+            'parameter': 0.04,
+            'length': 160000,
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+          {
+            'type': 'pareto',
+            'parameter': 0.04,
+            'length': 160000,
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+          {
+            'type': 'pareto',
+            'parameter': 0.04,
+            'length': 160000,
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+        ],
+        'pages_should_be_renumbered': True,
     },
     {
         'tenant_id': 2,
@@ -28,17 +48,23 @@ tenants = [
         'minimum_buffer_size': 2500,
         'base_buffer_size': 6500,
         'maximum_buffer_size': 16000,
-        'page_accesses_dist': {
+        'page_accesses_dist': [
+          {
             'type': 'normal',
             'variance': 4500,
-            'length': 80000,
-        },
-        'pages_should_be_renumbered': False,
-        'page_accesses_interval_dist': {
-            'type': 'uniform',
-            'length': 80000,
-            'max_value': 1,
-        },
+            'length': 40000,
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+          {
+            'type': 'normal',
+            'variance': 4500,
+            'length': 40000,
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+        ],
+        'pages_should_be_renumbered': True,
     },
     {
         'tenant_id': 3,
@@ -47,17 +73,23 @@ tenants = [
         'minimum_buffer_size': 2500,
         'base_buffer_size': 6500,
         'maximum_buffer_size': 16000,
-        'page_accesses_dist': {
+        'page_accesses_dist': [
+          {
             'type': 'zipfian',
             'parameter': 1.01,
-            'length': 80000,
-        },
-        'pages_should_be_renumbered': False,
-        'page_accesses_interval_dist': {
-            'type': 'uniform',
-            'length': 80000,
-            'max_value': 1,
-        },
+            'length': 40000,
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+          {
+            'type': 'zipfian',
+            'parameter': 1.01,
+            'length': 40000,
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+        ],
+        'pages_should_be_renumbered': True,
     },
     {
         'tenant_id': 4,
@@ -66,17 +98,30 @@ tenants = [
         'minimum_buffer_size': 3000,
         'base_buffer_size': 7500,
         'maximum_buffer_size': 18500,
-        'page_accesses_dist': {
+        'page_accesses_dist': [
+          {
             'type': 'pareto',
             'parameter': 0.04,
-            'length': 100000,
-        },
-        'pages_should_be_renumbered': False,
-        'page_accesses_interval_dist': {
-            'type': 'uniform',
-            'length': 100000,
-            'max_value': 1,
-        },
+            'length': 50000,
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+          {
+            'type': 'pareto',
+            'parameter': 0.04,
+            'length': 25000,
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+          {
+            'type': 'pareto',
+            'parameter': 0.04,
+            'length': 25000,
+            'interval_type': 'uniform',
+            'interval_max_value': 1,
+          },
+        ],
+        'pages_should_be_renumbered': True,
     },
 ]
 
