@@ -2,6 +2,7 @@ from .helpers import *
 import numpy as np
 from importlib import import_module
 from . import constants
+import random
 
 class Generator:
     def __init__(self, test_number: int):
@@ -22,85 +23,87 @@ class Generator:
             current_tenant_page_accesses = []
             current_tenant_page_accesses_sum = 0
 
-            while current_tenant_page_accesses_sum < tenant['page_accesses_dist']['length']:
-                # Generate a batch of page accesses
+            for page_access_dist_batch in tenant['page_accesses_dist']:
 
-                batch_pages = np.array([])
-                if tenant['page_accesses_dist']['type'] == 'zipfian':
-                    batch_pages = generate_zipfian_array(
-                        tenant['page_accesses_dist']['parameter'], 
-                        constants.BATCH_LENGTH, 
-                        tenant['database_size'],
-                    )
-                elif tenant['page_accesses_dist']['type'] == 'uniform':
-                    batch_pages = generate_uniform_array(
-                        constants.BATCH_LENGTH, 
-                        tenant['database_size'],
-                    )
-                elif tenant['page_accesses_dist']['type'] == 'normal':
-                    batch_pages = generate_normal_array(
-                        tenant['page_accesses_dist']['variance'], 
-                        constants.BATCH_LENGTH, 
-                        tenant['database_size'],
-                    )
-                elif tenant['page_accesses_dist']['type'] == 'pareto':
-                    batch_pages = generate_pareto_array(
-                        tenant['page_accesses_dist']['parameter'], 
-                        constants.BATCH_LENGTH, 
-                        tenant['database_size'],
-                    )
-                else:
-                    raise Exception(f"Unknown distribution type: {tenant['page_accesses_dist']['type']}")
-                
-                # Generate a batch of page access intervals
+                prv_length = current_tenant_page_accesses_sum
 
-                batch_interval_lengths = np.array([])
-                if tenant['page_accesses_interval_dist']['type'] == 'uniform':
-                    batch_interval_lengths = generate_uniform_array(
-                        constants.BATCH_LENGTH, 
-                        tenant['page_accesses_interval_dist']['max_value'],
-                    )
-                elif tenant['page_accesses_interval_dist']['type'] == 'normal':
-                    batch_interval_lengths = generate_normal_array(
-                        tenant['page_accesses_interval_dist']['variance'], 
-                        constants.BATCH_LENGTH, 
-                        tenant['page_accesses_interval_dist']['max_value'],
-                    )
-                elif tenant['page_accesses_interval_dist']['type'] == 'pareto':
-                    batch_interval_lengths = generate_pareto_array(
-                        tenant['page_accesses_interval_dist']['parameter'], 
-                        constants.BATCH_LENGTH, 
-                        tenant['page_accesses_interval_dist']['max_value'],
-                    )
-                elif tenant['page_accesses_interval_dist']['type'] == 'zipfian':
-                    batch_interval_lengths = generate_zipfian_array(
-                        tenant['page_accesses_interval_dist']['parameter'], 
-                        constants.BATCH_LENGTH, 
-                        tenant['page_accesses_interval_dist']['max_value'],
-                    )
-                else:
-                    raise Exception(f"Unknown distribution type: {tenant['page_accesses_interval_dist']['type']}")
+                permutation = np.arange(tenant['database_size']) + 1
+                if tenant['pages_should_be_renumbered']:
+                    permutation = np.random.permutation(tenant['database_size']) + 1
 
-                # Combine the two batches
-                batch = np.column_stack((batch_pages, batch_interval_lengths))
-                
-                # Add the batch to the current tenant page accesses, stopping if the tenant's page access length is reached
-                for batch_row in batch:
-                    if current_tenant_page_accesses_sum + batch_row[1] <= tenant['page_accesses_dist']['length']:
-                        current_tenant_page_accesses.append([batch_row[0], batch_row[1]])
-                        current_tenant_page_accesses_sum += batch_row[1]
+                while current_tenant_page_accesses_sum < prv_length + page_access_dist_batch['length']:
+                    # Generate a batch of page accesses
+
+                    batch_pages = np.array([])
+                    if page_access_dist_batch['type'] == 'zipfian':
+                        batch_pages = generate_zipfian_array(
+                            page_access_dist_batch['parameter'], 
+                            constants.BATCH_LENGTH, 
+                            tenant['database_size'],
+                        )
+                    elif page_access_dist_batch['type'] == 'uniform':
+                        batch_pages = generate_uniform_array(
+                            constants.BATCH_LENGTH, 
+                            tenant['database_size'],
+                        )
+                    elif page_access_dist_batch['type'] == 'normal':
+                        batch_pages = generate_normal_array(
+                            page_access_dist_batch['variance'], 
+                            constants.BATCH_LENGTH, 
+                            tenant['database_size'],
+                        )
+                    elif page_access_dist_batch['type'] == 'pareto':
+                        batch_pages = generate_pareto_array(
+                            page_access_dist_batch['parameter'], 
+                            constants.BATCH_LENGTH, 
+                            tenant['database_size'],
+                        )
                     else:
-                        current_tenant_page_accesses.append([batch_row[0], tenant['page_accesses_dist']['length'] - current_tenant_page_accesses_sum])
-                        current_tenant_page_accesses_sum = tenant['page_accesses_dist']['length']
-                        break
+                        raise Exception(f"Unknown distribution type: {page_access_dist_batch['type']}")
+                    
+                    # Generate a batch of page access intervals
+
+                    batch_interval_lengths = np.array([])
+                    if page_access_dist_batch['interval_type'] == 'uniform':
+                        batch_interval_lengths = generate_uniform_array(
+                            constants.BATCH_LENGTH, 
+                            page_access_dist_batch['interval_max_value'],
+                        )
+                    elif page_access_dist_batch['interval_type'] == 'normal':
+                        batch_interval_lengths = generate_normal_array(
+                            page_access_dist_batch['interval_variance'], 
+                            constants.BATCH_LENGTH, 
+                            page_access_dist_batch['interval_max_value'],
+                        )
+                    elif page_access_dist_batch['interval_type'] == 'pareto':
+                        batch_interval_lengths = generate_pareto_array(
+                            page_access_dist_batch['interval_parameter'], 
+                            constants.BATCH_LENGTH, 
+                            page_access_dist_batch['interval_max_value'],
+                        )
+                    elif page_access_dist_batch['interval_type'] == 'zipfian':
+                        batch_interval_lengths = generate_zipfian_array(
+                            page_access_dist_batch['interval_parameter'], 
+                            constants.BATCH_LENGTH, 
+                            page_access_dist_batch['interval_max_value'],
+                        )
+                    else:
+                        raise Exception(f"Unknown distribution type: {page_access_dist_batch['interval_type']}")
+
+                    # Combine the two batches
+                    batch = np.column_stack((batch_pages, batch_interval_lengths))
+                    
+                    # Add the batch to the current tenant page accesses, stopping if the tenant's page access length is reached
+                    for batch_row in batch:
+                        if current_tenant_page_accesses_sum + batch_row[1] <= prv_length + page_access_dist_batch['length']:
+                            current_tenant_page_accesses.append([permutation[batch_row[0] - 1], batch_row[1]])
+                            current_tenant_page_accesses_sum += batch_row[1]
+                        else:
+                            current_tenant_page_accesses.append([permutation[batch_row[0] - 1], prv_length + page_access_dist_batch['length'] - current_tenant_page_accesses_sum])
+                            current_tenant_page_accesses_sum = prv_length + page_access_dist_batch['length']
+                            break
 
             current_tenant_page_accesses = np.array(current_tenant_page_accesses)
-
-            # Renumber pages if necessary, applying the permutation to the page access intervals
-            if tenant['pages_should_be_renumbered']:
-                permutation = np.random.permutation(tenant['database_size']) + 1
-                
-                current_tenant_page_accesses[:, 0] = permutation[current_tenant_page_accesses[:, 0].astype(int) - 1]
 
             # Add tenant ID to the page accesses
             current_tenant_page_accesses = np.column_stack((
@@ -132,8 +135,32 @@ class Generator:
     
     def _merge_page_accesses(self):
         if self.merge_policy == "full_merge_and_shuffle":
-            compressed_page_accesses = np.concatenate([tenant['page_accesses'] for tenant in self.test_case.tenants])
-            np.random.shuffle(compressed_page_accesses)
+            # Initialize an index list for each tenant
+            tenant_indices = [i for i in range(len(self.test_case.tenants))]
+
+            # Track the current access position for each tenant
+            current_positions = [0] * len(self.test_case.tenants)
+
+            # Prepare the container for the merged page accesses
+            compressed_page_accesses = []
+
+            # Calculate initial weights based on the number of page accesses for each tenant
+            weights = [len(tenant['page_accesses']) for tenant in self.test_case.tenants]
+
+            # Continue until all tenant accesses are merged
+            while tenant_indices:
+                # Randomly select a tenant index based on weights
+                tenant_index = random.choices(tenant_indices, weights=weights, k=1)[0]
+                tenant = self.test_case.tenants[tenant_index]
+
+                # Add the next page access from this tenant
+                compressed_page_accesses.append(tenant['page_accesses'][current_positions[tenant_index]])
+                current_positions[tenant_index] += 1
+
+                # Check if all accesses for this tenant are merged and update weights
+                if current_positions[tenant_index] >= len(tenant['page_accesses']):
+                    weights.pop(tenant_indices.index(tenant_index))
+                    tenant_indices.remove(tenant_index)
         elif self.merge_policy == "batch_merge":
             compressed_page_accesses = []
             offsets = np.zeros(len(self.test_case.tenants) + 1, dtype=int)

@@ -35,7 +35,7 @@ class Validator:
             assert tenant['minimum_buffer_size'] <= tenant['maximum_buffer_size'], "Minimum buffer size must be at most maximum buffer size."
             
         assert sum([tenant['minimum_buffer_size'] for tenant in self.tenants]) <= self.total_buffer_size, "Total buffer size must be at least the sum of minimum buffer sizes."
-        assert sum([tenant['page_accesses_dist']['length'] for tenant in self.tenants]) <= constants.MAX_PAGE_ACCESSES_LENGTH, f"Total page accesses length must be at most {constants.MAX_PAGE_ACCESSES_LENGTH}."
+        assert sum(page_access_batch['length'] for tenant in self.tenants for page_access_batch in tenant['page_accesses_dist']) <= constants.MAX_PAGE_ACCESSES_LENGTH, f"Total page accesses length must be at most {constants.MAX_PAGE_ACCESSES_LENGTH}."
 
     def validate_input_file(self):
         try:
@@ -46,7 +46,7 @@ class Validator:
                 tenant_number, total_buffer_size, page_accesses_number = map(int, lines[0].split())
                 assert tenant_number == len(self.tenants), "Tenant number mismatch."
                 assert total_buffer_size == self.total_buffer_size, "Total buffer size mismatch."
-                assert page_accesses_number == sum([tenant['page_accesses_dist']['length'] for tenant in self.tenants]), "Page accesses number mismatch."
+                assert page_accesses_number == sum(page_access_batch['length'] for tenant in self.tenants for page_access_batch in tenant['page_accesses_dist']), "Page accesses number mismatch."
 
                 assert len(lines[1].split()) == tenant_number, "Second line must contain tenant number integers."
                 priority_levels = list(map(int, lines[1].split()))
@@ -75,7 +75,7 @@ class Validator:
                     page_accesses_per_tenant[tenant_id] += 1
 
                 for tenant in range(1, tenant_number + 1):
-                    assert page_accesses_per_tenant[tenant] == self.tenants[tenant - 1]['page_accesses_dist']['length'], "Page access length per tenant mismatch."
+                    assert page_accesses_per_tenant[tenant] == sum(page_access_batch['length'] for page_access_batch in self.tenants[tenant - 1]['page_accesses_dist']), "Page accesses length per tenant mismatch."
 
         except FileNotFoundError:
             raise FileNotFoundError(f"Input file {self.input_file} not found.")
