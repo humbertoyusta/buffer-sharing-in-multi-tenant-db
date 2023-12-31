@@ -2,6 +2,7 @@
 #include "input_reader.h"
 #include "scorer.h"
 #include "solutions/lru_policy_1_solution.h"
+#include "solutions/lru_policy_2_solution.h"
 #include <iostream>
 #include <string>
 
@@ -24,6 +25,8 @@ int main(int argc, char **argv) {
 
     if (solution_name == "lru_policy_1_solution") {
       solution = new LruPolicy1Solution();
+    } else if (solution_name == "lru_policy_2_solution") {
+      solution = new LruPolicy2Solution();
     } else {
       std::cout << "Unknown solution name: " << solution_name << std::endl;
       return 1;
