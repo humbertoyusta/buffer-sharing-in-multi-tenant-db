@@ -10,6 +10,8 @@ struct TestScore {
   std::vector<double> tenant_fault_scores;
   double total_hit_score{0};
   std::vector<double> tenant_hit_scores;
+  std::vector<double> solution_hit_ratio_per_tenant;
+  std::vector<double> judge_hit_ratio_per_tenant;
 };
 
 class Scorer {
