@@ -7,8 +7,10 @@ add_library(src
     single_lru_cache.cpp
     checker.cpp
     solutions/cache_eviction_algorithms/lru.cpp
+    solutions/cache_eviction_algorithms/lfu.cpp
     solutions/lru_policy_1_solution.cpp
     solutions/lru_policy_2_solution.cpp
+    solutions/lfu_policy_1_solution.cpp
     scorer.cpp
 )
 
