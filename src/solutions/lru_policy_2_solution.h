@@ -15,11 +15,13 @@ public:
   std::pair<int, bool> AccessPage(PageAccess page_access) override;
 
 private:
+  void UpdateScore(int tenant_id);
   void AccessPageInJudge(PageAccess page_access);
   std::vector<SingleLruCache> judge_caches_;
   std::vector<int> hits_in_judge_;
   std::vector<int> hits_in_solution_;
   std::vector<int> cache_used_per_tenant_;
+  std::vector<double> tenant_scores_;
   Lru lru_cache_;
   HitRatioCacheUsedRatioPolicy tenant_selection_policy_;
 };
