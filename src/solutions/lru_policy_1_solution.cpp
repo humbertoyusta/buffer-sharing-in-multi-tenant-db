@@ -103,6 +103,6 @@ void LruPolicy1Solution::UpdateScore(int tenant_id) {
   tenant_scores_[tenant_id - 1] = tenant_selection_policy_.TenantScore(
       faults_in_solution_[tenant_id - 1], faults_in_judge_[tenant_id - 1],
       cache_used_per_tenant_[tenant_id - 1],
-      tenants_[tenant_id - 1].max_buffer_size,
+      tenants_[tenant_id - 1].base_buffer_size,
       tenants_[tenant_id - 1].priority);
 }
