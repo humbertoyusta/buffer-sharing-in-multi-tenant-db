@@ -11,6 +11,7 @@ add_library(src
     solutions/lru_policy_1_solution.cpp
     solutions/lru_policy_2_solution.cpp
     solutions/lfu_policy_1_solution.cpp
+    solutions/lfu_policy_2_solution.cpp
     scorer.cpp
 )
 
