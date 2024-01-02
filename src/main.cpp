@@ -3,6 +3,7 @@
 #include "scorer.h"
 #include "solutions/lfu_policy_1_solution.h"
 #include "solutions/lfu_policy_2_solution.h"
+#include "solutions/lru_2_solution.h"
 #include "solutions/lru_policy_1_solution.h"
 #include "solutions/lru_policy_2_solution.h"
 #include <iostream>
@@ -33,6 +34,8 @@ int main(int argc, char **argv) {
       solution = new LfuPolicy1Solution();
     } else if (solution_name == "lfu_policy_2_solution") {
       solution = new LfuPolicy2Solution();
+    } else if (solution_name == "lru_2_solution") {
+      solution = new Lru2Solution();
     } else {
       std::cout << "Unknown solution name: " << solution_name << std::endl;
       return 1;
