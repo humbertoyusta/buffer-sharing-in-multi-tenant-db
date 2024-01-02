@@ -17,8 +17,9 @@ public:
   /**
    * @brief Access a page in the cache
    * @param page_access PageAccess object containing the tenant id and page id
-   * @return std::pair<int, bool> where the first element is the page id and the
-   * second is true if the page was found in the cache and false otherwise
+   * @return std::pair<int, bool> where the first element is the buffer location
+   * and the second is true if the page was found in the cache and false
+   * otherwise
    */
   std::pair<int, bool> GetPage(PageAccess page_access);
 
