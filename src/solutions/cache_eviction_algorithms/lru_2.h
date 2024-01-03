@@ -3,6 +3,7 @@
 
 #include "types/page_access.h"
 #include "types/tenant.h"
+#include <list>
 #include <queue>
 #include <set>
 #include <unordered_map>
@@ -36,7 +37,8 @@ public:
 
   Lru2() {}
 
-  Lru2(std::vector<Tenant> tenants, int total_buffer_size);
+  Lru2(std::vector<Tenant> tenants, int total_buffer_size,
+       double correlated_reference_period_length_multiplier);
 
   /**
    * @brief Access a page in the cache
@@ -73,12 +75,23 @@ public:
   int GetAvailableLocation();
 
 private:
+  void MoveLastCorrelatedPageToMain(int tenant_id);
   std::vector<Tenant> tenants_;
   int total_buffer_size_;
   int current_time_{0};
+  double correlated_reference_period_length_multiplier_;
+  std::vector<int> correlated_reference_period_length_;
   std::queue<int> available_locations_;
   std::vector<std::set<Page>>
       pages_sets_; // Vector of sets of pages, for LRU-2 cache per tenant
+  std::vector<std::list<Page>>
+      correlated_pages_lists_; // Vector of lists of pages, for LRU-2 cache per
+                               // tenant, storing pages in the order of their
+                               // last access
+  std::vector<std::unordered_map<int, std::list<Page>::iterator>>
+      correlated_pages_maps_; // Vector of maps, for LRU-2 cache per tenant,
+                              // storing page id and iterator to the
+                              // corresponding page in the double linked list
   std::vector<std::unordered_map<int, std::set<Page>::iterator>>
       pages_maps_; // Vector of maps, for LRU cache per tenant, storing page id
                    // and iterator to the corresponding page in the double

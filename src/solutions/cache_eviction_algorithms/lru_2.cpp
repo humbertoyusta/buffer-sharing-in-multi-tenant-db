@@ -1,57 +1,129 @@
 #include "lru_2.h"
 #include <assert.h>
+#include <iostream>
 
-Lru2::Lru2(std::vector<Tenant> tenants, int total_buffer_size)
-    : tenants_(tenants), total_buffer_size_(total_buffer_size) {
+Lru2::Lru2(std::vector<Tenant> tenants, int total_buffer_size,
+           double correlated_reference_period_length_multiplier_)
+    : tenants_(tenants), total_buffer_size_(total_buffer_size),
+      current_time_(0), correlated_reference_period_length_multiplier_(
+                            correlated_reference_period_length_multiplier_) {
   for (int i = 1; i <= total_buffer_size; ++i) {
     available_locations_.push(i);
   }
   pages_sets_.resize(tenants.size());
   pages_maps_.resize(tenants.size());
+  correlated_pages_lists_.resize(tenants.size());
+  correlated_pages_maps_.resize(tenants.size());
+  for (int i = 0; i < tenants.size(); ++i) {
+    correlated_reference_period_length_.push_back(
+        int((double)tenants[i].base_buffer_size *
+            correlated_reference_period_length_multiplier_));
+  }
 }
 
 std::pair<int, bool> Lru2::GetPage(PageAccess page_access) {
+  auto found_correlated =
+      correlated_pages_maps_[page_access.tenant_id - 1].find(
+          page_access.page_id);
+
+  if (found_correlated !=
+      correlated_pages_maps_[page_access.tenant_id - 1].end()) {
+    return {found_correlated->second->buffer_location, true};
+  }
+
   auto found = pages_maps_[page_access.tenant_id - 1].find(page_access.page_id);
 
   if (found != pages_maps_[page_access.tenant_id - 1].end()) {
     return {found->second->buffer_location, true};
-  } else {
-    return {0, false};
   }
+
+  return {0, false};
 }
 
 Lru2::Page Lru2::EvictPage(int tenant_id) {
-  assert(!pages_sets_[tenant_id - 1].empty());
-  auto page_to_evict_iterator = pages_sets_[tenant_id - 1].begin();
-  auto page_to_evict = *page_to_evict_iterator;
-  pages_maps_[tenant_id - 1].erase(page_to_evict.page_id);
-  pages_sets_[tenant_id - 1].erase(page_to_evict_iterator);
-  return page_to_evict;
+  if (!pages_sets_[tenant_id - 1].empty()) {
+    auto page_to_evict_iterator = pages_sets_[tenant_id - 1].begin();
+    auto page_to_evict = *page_to_evict_iterator;
+    pages_maps_[tenant_id - 1].erase(page_to_evict.page_id);
+    pages_sets_[tenant_id - 1].erase(page_to_evict_iterator);
+    return page_to_evict;
+  } else {
+    assert(!correlated_pages_lists_[tenant_id - 1].empty());
+    std::list<Page>::iterator page_to_evict_iterator =
+        prev(correlated_pages_lists_[tenant_id - 1].end());
+    auto page_to_evict = *page_to_evict_iterator;
+    correlated_pages_maps_[tenant_id - 1].erase(page_to_evict.page_id);
+    correlated_pages_lists_[tenant_id - 1].erase(page_to_evict_iterator);
+    return page_to_evict;
+  }
 }
 
 void Lru2::UpdateAccessHistory(PageAccess page_access) {
   ++current_time_;
-  auto found = pages_maps_[page_access.tenant_id - 1].find(page_access.page_id);
-  auto page = *found->second;
-  pages_sets_[page_access.tenant_id - 1].erase(found->second);
 
-  page.second_last_accessed = page.last_accessed;
-  page.last_accessed = current_time_;
+  auto found_correlated =
+      correlated_pages_maps_[page_access.tenant_id - 1].find(
+          page_access.page_id);
 
-  auto insert_result = pages_sets_[page_access.tenant_id - 1].insert(page);
-  assert(insert_result.second);
+  if (found_correlated !=
+      correlated_pages_maps_[page_access.tenant_id - 1].end()) {
+    auto page = *found_correlated->second;
+    correlated_pages_lists_[page_access.tenant_id - 1].erase(
+        found_correlated->second);
 
-  pages_maps_[page_access.tenant_id - 1][page_access.page_id] =
-      insert_result.first;
+    page.second_last_accessed = page.last_accessed;
+    page.last_accessed = current_time_;
+
+    correlated_pages_lists_[page_access.tenant_id - 1].push_front(page);
+    correlated_pages_maps_[page_access.tenant_id - 1][page_access.page_id] =
+        correlated_pages_lists_[page_access.tenant_id - 1].begin();
+  } else {
+
+    auto found =
+        pages_maps_[page_access.tenant_id - 1].find(page_access.page_id);
+
+    auto page = *found->second;
+    pages_sets_[page_access.tenant_id - 1].erase(found->second);
+    pages_maps_[page_access.tenant_id - 1].erase(found);
+
+    page.second_last_accessed = page.last_accessed;
+    page.last_accessed = current_time_;
+
+    correlated_pages_lists_[page_access.tenant_id - 1].push_front(page);
+    correlated_pages_maps_[page_access.tenant_id - 1][page_access.page_id] =
+        correlated_pages_lists_[page_access.tenant_id - 1].begin();
+
+    if (correlated_pages_lists_[page_access.tenant_id - 1].size() >
+        correlated_reference_period_length_[page_access.tenant_id - 1]) {
+      MoveLastCorrelatedPageToMain(page_access.tenant_id);
+    }
+  }
 }
 
 void Lru2::AddPage(PageAccess page_access, int buffer_location) {
   ++current_time_;
   Page page = Page(page_access.page_id, buffer_location, current_time_, 0);
-  auto insert_result = pages_sets_[page_access.tenant_id - 1].insert(page);
+
+  correlated_pages_lists_[page_access.tenant_id - 1].push_front(page);
+  correlated_pages_maps_[page_access.tenant_id - 1][page_access.page_id] =
+      correlated_pages_lists_[page_access.tenant_id - 1].begin();
+
+  if (correlated_pages_lists_[page_access.tenant_id - 1].size() >
+      correlated_reference_period_length_[page_access.tenant_id - 1]) {
+    MoveLastCorrelatedPageToMain(page_access.tenant_id);
+  }
+}
+
+void Lru2::MoveLastCorrelatedPageToMain(int tenant_id) {
+  std::list<Page>::iterator page_to_move_iterator =
+      prev(correlated_pages_lists_[tenant_id - 1].end());
+  auto page_to_move = *page_to_move_iterator;
+  correlated_pages_maps_[tenant_id - 1].erase(page_to_move.page_id);
+  correlated_pages_lists_[tenant_id - 1].erase(page_to_move_iterator);
+
+  auto insert_result = pages_sets_[tenant_id - 1].insert(page_to_move);
   assert(insert_result.second);
-  pages_maps_[page_access.tenant_id - 1][page_access.page_id] =
-      insert_result.first;
+  pages_maps_[tenant_id - 1][page_to_move.page_id] = insert_result.first;
 }
 
 int Lru2::GetAvailableLocation() {
