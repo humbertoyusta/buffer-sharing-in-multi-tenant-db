@@ -23,3 +23,6 @@ target_include_directories(src PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(main main.cpp)
 target_link_libraries(main src)
+
+add_executable(tuner tuner.cpp)
+target_link_libraries(tuner src)

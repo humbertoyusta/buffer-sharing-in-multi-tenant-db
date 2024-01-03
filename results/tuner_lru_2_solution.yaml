@@ -1,0 +1,33 @@
+solution_name: lru_2_solution
+tune_parameters:
+  - tune_parameter: 0.10000000000000001
+    mean_fault_score: 0.10992632382351346
+    mean_hit_score: 0.095608753082577366
+  - tune_parameter: 0.20000000000000001
+    mean_fault_score: 0.097939290588221026
+    mean_hit_score: 0.089588241472238109
+  - tune_parameter: 0.29999999999999999
+    mean_fault_score: 0.089481566222095105
+    mean_hit_score: 0.086670074323707019
+  - tune_parameter: 0.40000000000000002
+    mean_fault_score: 0.081568305578041983
+    mean_hit_score: 0.083937367949296543
+  - tune_parameter: 0.5
+    mean_fault_score: 0.075254421180157516
+    mean_hit_score: 0.08144462004996271
+  - tune_parameter: 0.59999999999999998
+    mean_fault_score: 0.070525337342113539
+    mean_hit_score: 0.080159302784176073
+  - tune_parameter: 0.69999999999999996
+    mean_fault_score: 0.067288414865902993
+    mean_hit_score: 0.080524705418544215
+  - tune_parameter: 0.80000000000000004
+    mean_fault_score: 0.065655178815502924
+    mean_hit_score: 0.082852474877327928
+  - tune_parameter: 0.90000000000000002
+    mean_fault_score: 0.064816768880364584
+    mean_hit_score: 0.085438792430099456
+  - tune_parameter: 1
+    mean_fault_score: 0.064306060877693208
+    mean_hit_score: 0.087568049989692698
+best_tune_parameter: 1
