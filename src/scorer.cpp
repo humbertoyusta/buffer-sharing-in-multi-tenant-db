@@ -70,16 +70,7 @@ Scorer::GetTestScore(std::vector<Tenant> tenants,
 }
 
 void Scorer::ReportScores(std::vector<TestScore> test_scores) {
-  double mean_fault_score = 0;
-  double mean_hit_score = 0;
-
-  for (auto test_score : test_scores) {
-    mean_fault_score += test_score.total_fault_score;
-    mean_hit_score += test_score.total_hit_score;
-  }
-
-  mean_fault_score /= test_scores.size();
-  mean_hit_score /= test_scores.size();
+  auto [mean_fault_score, mean_hit_score] = GetMeanScores(test_scores);
 
   int test_number = 1;
   std::string filepath = "results/" + solution_name_ + ".yaml";
@@ -120,4 +111,20 @@ void Scorer::ReportScores(std::vector<TestScore> test_scores) {
   std::ofstream file(filepath);
   file << out.c_str();
   file.close();
+}
+
+std::pair<double, double>
+Scorer::GetMeanScores(std::vector<TestScore> test_scores) {
+  double mean_fault_score = 0;
+  double mean_hit_score = 0;
+
+  for (auto test_score : test_scores) {
+    mean_fault_score += test_score.total_fault_score;
+    mean_hit_score += test_score.total_hit_score;
+  }
+
+  mean_fault_score /= test_scores.size();
+  mean_hit_score /= test_scores.size();
+
+  return {mean_fault_score, mean_hit_score};
 }

@@ -26,6 +26,8 @@ public:
 
   void ReportScores(std::vector<TestScore> test_scores);
 
+  std::pair<double, double> GetMeanScores(std::vector<TestScore> test_scores);
+
 private:
   static double ratio(const int a, const int b);
   static double square(const double a);
