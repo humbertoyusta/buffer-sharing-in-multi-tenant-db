@@ -19,13 +19,13 @@ int main(int argc, char **argv) {
   auto scorer = Scorer(solution_name);
   std::vector<TestScore> test_scores;
 
-  int best_tune_parameter = -1;
+  double best_tune_parameter = -1;
   double best_mean_fault_score = INT_MAX;
 
   std::vector<double> tune_parameters;
 
   if (solution_name == "lru_2_solution")
-    tune_parameters = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0};
+    tune_parameters = {0.03, 0.05, 0.07, 0.09, 0.11, 0.13, 0.15, 0.2, 0.25};
 
   std::string filepath = "results/tuner_" + solution_name + ".yaml";
   YAML::Emitter out;

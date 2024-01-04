@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
     } else if (solution_name == "lfu_policy_2_solution") {
       solution = new LfuPolicy2Solution();
     } else if (solution_name == "lru_2_solution") {
-      solution = new Lru2Solution(0.25);
+      solution = new Lru2Solution(0.1);
     } else {
       std::cout << "Unknown solution name: " << solution_name << std::endl;
       return 1;
