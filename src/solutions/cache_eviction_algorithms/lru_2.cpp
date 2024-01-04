@@ -77,15 +77,8 @@ void Lru2::UpdateAccessHistory(PageAccess page_access) {
   if (found_correlated !=
       correlated_pages_maps_[page_access.tenant_id - 1].end()) {
     auto page = *found_correlated->second;
-    // correlated_pages_lists_[page_access.tenant_id - 1].erase(
-    //     found_correlated->second);
 
-    // page.second_last_accessed = page.last_accessed;
     page.last_accessed = current_time_;
-
-    // correlated_pages_lists_[page_access.tenant_id - 1].push_front(page);
-    // correlated_pages_maps_[page_access.tenant_id - 1][page_access.page_id] =
-    //     correlated_pages_lists_[page_access.tenant_id - 1].begin();
   } else {
 
     auto found =

@@ -25,7 +25,8 @@ int main(int argc, char **argv) {
   std::vector<double> tune_parameters;
 
   if (solution_name == "lru_2_solution")
-    tune_parameters = {0.03, 0.05, 0.07, 0.09, 0.11, 0.13, 0.15, 0.2, 0.25};
+    tune_parameters = {0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.04,
+                       0.05,  0.06, 0.07,  0.08, 0.09,  0.1};
 
   std::string filepath = "results/tuner_" + solution_name + ".yaml";
   YAML::Emitter out;
