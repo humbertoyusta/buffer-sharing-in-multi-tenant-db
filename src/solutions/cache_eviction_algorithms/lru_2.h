@@ -76,10 +76,13 @@ public:
 
 private:
   void MoveLastCorrelatedPageToMain(int tenant_id);
+  void InsertToRetainedPages(int page_id, int tenant_id,
+                             int last_accessed_time);
   std::vector<Tenant> tenants_;
   int total_buffer_size_;
   int current_time_{0};
   double correlated_reference_period_length_multiplier_;
+  std::vector<int> retained_period_length_;
   std::vector<int> correlated_reference_period_length_;
   std::queue<int> available_locations_;
   std::vector<std::set<Page>>
@@ -94,8 +97,15 @@ private:
                               // corresponding page in the double linked list
   std::vector<std::unordered_map<int, std::set<Page>::iterator>>
       pages_maps_; // Vector of maps, for LRU cache per tenant, storing page id
-                   // and iterator to the corresponding page in the double
-                   // linked list
+  // and iterator to the corresponding page in the double
+  // linked list
+  std::vector<std::list<std::pair<int, int>>>
+      retained_pages_lists_; // List of pairs of page id and last
+                             // accessed time, for retained pages
+  std::vector<std::unordered_map<int, std::list<std::pair<int, int>>::iterator>>
+      retained_pages_maps_; // Map of page id and iterator to the
+                            // corresponding page in the double linked
+                            // list, for retained pages
 };
 
 #endif // LRU_2_H
