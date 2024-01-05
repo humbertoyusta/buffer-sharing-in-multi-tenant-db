@@ -78,7 +78,6 @@ private:
   /**
    * @brief Move the last correlated page to the main cache
    * @param tenant_id The tenant id
-   * @return The page that was moved
    * @note The page must be in the correlated cache of the given tenant before
    * calling this
    */
