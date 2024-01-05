@@ -75,7 +75,23 @@ public:
   int GetAvailableLocation();
 
 private:
+  /**
+   * @brief Move the last correlated page to the main cache
+   * @param tenant_id The tenant id
+   * @return The page that was moved
+   * @note The page must be in the correlated cache of the given tenant before
+   * calling this
+   */
   void MoveLastCorrelatedPageToMain(int tenant_id);
+  /**
+   * @brief Insert the given page (that was evicted from the main cache) to the
+   * retained pages of the tenant, which preserves the page in the cache for a
+   * certain period of time (retained period) so its information can be used to
+   * predict future accesses
+   * @param page_id The page id
+   * @param tenant_id The tenant id
+   * @param last_accessed_time The last accessed time of the page
+   */
   void InsertToRetainedPages(int page_id, int tenant_id,
                              int last_accessed_time);
   std::vector<Tenant> tenants_;
