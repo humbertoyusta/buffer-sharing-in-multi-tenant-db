@@ -84,21 +84,10 @@ void _2Q::SetPageAsMostRecentlyUsed(PageAccess page_access) {
     am_maps_[page_access.tenant_id - 1][page_access.page_id] =
         am_queue_[page_access.tenant_id - 1].begin();
   } else {
-    auto found_in_a1_in =
-        a1_in_maps_[page_access.tenant_id - 1].find(page_access.page_id);
-
-    // Assert that page is in A1 in queue
-    assert(found_in_a1_in != a1_in_maps_[page_access.tenant_id - 1].end());
-
-    // Move page to Am queue
-    int buffer_location = found_in_a1_in->second->second;
-    a1_in_queue_[page_access.tenant_id - 1].erase(found_in_a1_in->second);
-    a1_in_maps_[page_access.tenant_id - 1].erase(page_access.page_id);
-
-    am_queue_[page_access.tenant_id - 1].push_front(
-        {page_access.page_id, buffer_location});
-    am_maps_[page_access.tenant_id - 1][page_access.page_id] =
-        am_queue_[page_access.tenant_id - 1].begin();
+    // If it is not there it must be on A1 in queue, in this case
+    // do nothing, since it is a FIFO queue
+    assert(a1_in_maps_[page_access.tenant_id - 1].find(page_access.page_id) !=
+           a1_in_maps_[page_access.tenant_id - 1].end());
   }
 }
 
