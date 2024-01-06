@@ -1,6 +1,7 @@
 #include "checker.h"
 #include "input_reader.h"
 #include "scorer.h"
+#include "solutions/_2q_solution.h"
 #include "solutions/lfu_policy_1_solution.h"
 #include "solutions/lfu_policy_2_solution.h"
 #include "solutions/lru_2_solution.h"
@@ -20,13 +21,20 @@ int main(int argc, char **argv) {
   std::vector<TestScore> test_scores;
 
   double best_tune_parameter = -1;
+  double best_second_tune_parameter = -1;
   double best_mean_fault_score = INT_MAX;
 
   std::vector<double> tune_parameters;
+  std::vector<double> second_tune_parameters;
 
   if (solution_name == "lru_2_solution")
     tune_parameters = {0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.04,
                        0.05,  0.06, 0.07,  0.08, 0.09,  0.1};
+
+  if (solution_name == "_2q_solution") {
+    tune_parameters = {0.25, 0.25, 0.25, 0.35, 0.35, 0.35, 0.5, 0.5, 0.5};
+    second_tune_parameters = {0.25, 0.5, 1.0, 0.25, 0.5, 1.0, 0.25, 0.5, 1.0};
+  }
 
   std::string filepath = "results/tuner_" + solution_name + ".yaml";
   YAML::Emitter out;
@@ -34,11 +42,18 @@ int main(int argc, char **argv) {
   out << YAML::Key << "solution_name" << YAML::Value << solution_name;
   out << YAML::Key << "tune_parameters" << YAML::Value << YAML::BeginSeq;
 
+  int i = 0;
   for (auto tune_parameter : tune_parameters) {
-    std::cout << "Tuning parameter: " << tune_parameter << std::endl;
+    std::cout << "Tuning parameter: " << tune_parameter;
+    if (second_tune_parameters.size() > 0)
+      std::cout << ", " << second_tune_parameters[i];
+    std::cout << std::endl;
 
     out << YAML::BeginMap;
     out << YAML::Key << "tune_parameter" << YAML::Value << tune_parameter;
+    if (second_tune_parameters.size() > 0)
+      out << YAML::Key << "second_tune_parameter" << YAML::Value
+          << second_tune_parameters[i];
 
     for (int test_number = first_test_number; test_number <= last_test_number;
          test_number++) {
@@ -51,6 +66,9 @@ int main(int argc, char **argv) {
 
       if (solution_name == "lru_2_solution") {
         solution = new Lru2Solution(tune_parameter);
+      }
+      if (solution_name == "_2q_solution") {
+        solution = new _2QSolution(tune_parameter, second_tune_parameters[i]);
       } else {
         std::cout << "Solution not tunable, with name: " << solution_name
                   << std::endl;
@@ -58,8 +76,10 @@ int main(int argc, char **argv) {
       }
 
       std::cout << "Running test " << test_number << " with solution "
-                << solution_name << " and tune parameter " << tune_parameter
-                << std::endl;
+                << solution_name << " and tune parameter " << tune_parameter;
+      if (second_tune_parameters.size() > 0)
+        std::cout << ", " << second_tune_parameters[i];
+      std::cout << std::endl;
 
       auto [judge_page_hits_per_tenant, judge_page_faults_per_tenant,
             solution_page_hits_per_tenant, solution_page_faults_per_tenant] =
@@ -89,7 +109,10 @@ int main(int argc, char **argv) {
     if (mean_fault_score < best_mean_fault_score) {
       best_mean_fault_score = mean_fault_score;
       best_tune_parameter = tune_parameter;
+      best_second_tune_parameter = second_tune_parameters[i];
     }
+
+    i++;
   }
 
   std::cout << "Best parameter: " << best_tune_parameter << std::endl;
@@ -97,6 +120,8 @@ int main(int argc, char **argv) {
   out << YAML::EndSeq;
   out << YAML::Key << "best_tune_parameter" << YAML::Value
       << best_tune_parameter;
+  out << YAML::Key << "best_second_tune_parameter" << YAML::Value
+      << best_second_tune_parameter;
   out << YAML::EndMap;
 
   std::ofstream file(filepath);
