@@ -32,8 +32,10 @@ int main(int argc, char **argv) {
                        0.05,  0.06, 0.07,  0.08, 0.09,  0.1};
 
   if (solution_name == "_2q_solution") {
-    tune_parameters = {0.25, 0.25, 0.25, 0.35, 0.35, 0.35, 0.5, 0.5, 0.5};
-    second_tune_parameters = {0.25, 0.5, 1.0, 0.25, 0.5, 1.0, 0.25, 0.5, 1.0};
+    tune_parameters = {0.1, 0.1, 0.1, 0.2, 0.2, 0.2,
+                       0.3, 0.3, 0.3, 0.4, 0.4, 0.4};
+    second_tune_parameters = {0.5, 1.0, 1.5, 0.5, 1.0, 1.5,
+                              0.5, 1.0, 1.5, 0.5, 1.0, 1.5};
   }
 
   std::string filepath = "results/tuner_" + solution_name + ".yaml";
