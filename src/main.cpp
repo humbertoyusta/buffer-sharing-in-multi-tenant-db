@@ -1,6 +1,7 @@
 #include "checker.h"
 #include "input_reader.h"
 #include "scorer.h"
+#include "solutions/_2q_solution.h"
 #include "solutions/lfu_policy_1_solution.h"
 #include "solutions/lfu_policy_2_solution.h"
 #include "solutions/lru_2_solution.h"
@@ -36,6 +37,8 @@ int main(int argc, char **argv) {
       solution = new LfuPolicy2Solution();
     } else if (solution_name == "lru_2_solution") {
       solution = new Lru2Solution(0.01);
+    } else if (solution_name == "_2q_solution") {
+      solution = new _2QSolution(0.35, 1);
     } else {
       std::cout << "Unknown solution name: " << solution_name << std::endl;
       return 1;
