@@ -55,6 +55,7 @@ std::pair<int, int> _2Q::EvictPage(int tenant_id) {
     a1_in_maps_[tenant_id - 1].erase(page_to_evict.first);
 
     AddPageToA1OutQueue(tenant_id, page_to_evict.first);
+
     return {page_to_evict.first, page_to_evict.second};
   } else {
     // Evict from Am queue
@@ -62,7 +63,9 @@ std::pair<int, int> _2Q::EvictPage(int tenant_id) {
     am_queue_[tenant_id - 1].pop_back();
     am_maps_[tenant_id - 1].erase(page_to_evict.first);
 
-    AddPageToA1OutQueue(tenant_id, page_to_evict.first);
+    // Do not add page to A1 out queue since it is has not been accessed in a
+    // while
+
     return {page_to_evict.first, page_to_evict.second};
   }
 }
