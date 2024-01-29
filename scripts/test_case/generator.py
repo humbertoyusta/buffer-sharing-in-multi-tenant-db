@@ -58,6 +58,45 @@ class Generator:
                             constants.BATCH_LENGTH, 
                             tenant['database_size'],
                         )
+                    elif page_access_dist_batch['type'] == 'normal_with_correlated_references':
+                        batch_pages = generate_normal_with_correlated_references(
+                            page_access_dist_batch['variance'], 
+                            constants.BATCH_LENGTH, 
+                            tenant['database_size'],
+                            page_access_dist_batch['max_correlated_references'], 
+                            page_access_dist_batch['first_correlated_reference_min_distance'], 
+                            page_access_dist_batch['first_correlated_reference_max_distance'], 
+                            page_access_dist_batch['correlated_reference_distance_growth_factor'], 
+                        )
+                    elif page_access_dist_batch['type'] == 'uniform_with_correlated_references':
+                        batch_pages = generate_uniform_with_correlated_references(
+                            constants.BATCH_LENGTH, 
+                            tenant['database_size'],
+                            page_access_dist_batch['max_correlated_references'], 
+                            page_access_dist_batch['first_correlated_reference_min_distance'],
+                            page_access_dist_batch['first_correlated_reference_max_distance'],
+                            page_access_dist_batch['correlated_reference_distance_growth_factor'],
+                        )
+                    elif page_access_dist_batch['type'] == 'pareto_with_correlated_references':
+                        batch_pages = generate_pareto_with_correlated_references(
+                            page_access_dist_batch['parameter'], 
+                            constants.BATCH_LENGTH, 
+                            tenant['database_size'],
+                            page_access_dist_batch['max_correlated_references'], 
+                            page_access_dist_batch['first_correlated_reference_min_distance'],
+                            page_access_dist_batch['first_correlated_reference_max_distance'],
+                            page_access_dist_batch['correlated_reference_distance_growth_factor'],
+                        )
+                    elif page_access_dist_batch['type'] == 'zipfian_with_correlated_references':
+                        batch_pages = generate_zipfian_with_correlated_references(
+                            page_access_dist_batch['parameter'],
+                            constants.BATCH_LENGTH,
+                            tenant['database_size'],
+                            page_access_dist_batch['max_correlated_references'],
+                            page_access_dist_batch['first_correlated_reference_min_distance'],
+                            page_access_dist_batch['first_correlated_reference_max_distance'],
+                            page_access_dist_batch['correlated_reference_distance_growth_factor'],
+                        )
                     else:
                         raise Exception(f"Unknown distribution type: {page_access_dist_batch['type']}")
                     
