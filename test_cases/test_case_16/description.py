@@ -6,9 +6,9 @@ tenants = [
         'tenant_id': 1,
         'priority_level': 5,
         'database_size': 100000,
-        'minimum_buffer_size': 3000,
-        'base_buffer_size': 8000,
-        'maximum_buffer_size': 20000,
+        'minimum_buffer_size': 800,
+        'base_buffer_size': 2000,
+        'maximum_buffer_size': 5000,
         'page_accesses_dist': [
           {
             'type': 'pareto_with_correlated_references',
@@ -28,9 +28,9 @@ tenants = [
         'tenant_id': 2,
         'priority_level': 5,
         'database_size': 80000,
-        'minimum_buffer_size': 3000,
-        'base_buffer_size': 8000,
-        'maximum_buffer_size': 20000,
+        'minimum_buffer_size': 800,
+        'base_buffer_size': 2000,
+        'maximum_buffer_size': 5000,
         'page_accesses_dist': [
           {
             'type': 'pareto_with_correlated_references',
@@ -50,9 +50,9 @@ tenants = [
         'tenant_id': 3,
         'priority_level': 8,
         'database_size': 200000,
-        'minimum_buffer_size': 8000,
-        'base_buffer_size': 16000,
-        'maximum_buffer_size': 40000,
+        'minimum_buffer_size': 2000,
+        'base_buffer_size': 4000,
+        'maximum_buffer_size': 10000,
         'page_accesses_dist': [
           {
             'type': 'zipfian_with_correlated_references',
@@ -72,9 +72,9 @@ tenants = [
         'tenant_id': 4,
         'priority_level': 5,
         'database_size': 120000,
-        'minimum_buffer_size': 3000,
-        'base_buffer_size': 8000,
-        'maximum_buffer_size': 20000,
+        'minimum_buffer_size': 800,
+        'base_buffer_size': 2000,
+        'maximum_buffer_size': 5000,
         'page_accesses_dist': [
           {
             'type': 'normal_with_correlated_references',
@@ -94,9 +94,9 @@ tenants = [
         'tenant_id': 5,
         'priority_level': 8,
         'database_size': 190000,
-        'minimum_buffer_size': 8000,
-        'base_buffer_size': 16000,
-        'maximum_buffer_size': 40000,
+        'minimum_buffer_size': 2000,
+        'base_buffer_size': 4000,
+        'maximum_buffer_size': 10000,
         'page_accesses_dist': [
           {
             'type': 'normal_with_correlated_references',
@@ -116,9 +116,9 @@ tenants = [
         'tenant_id': 6,
         'priority_level': 5,
         'database_size': 10000,
-        'minimum_buffer_size': 3000,
-        'base_buffer_size': 8000,
-        'maximum_buffer_size': 20000,
+        'minimum_buffer_size': 800,
+        'base_buffer_size': 2000,
+        'maximum_buffer_size': 5000,
         'page_accesses_dist': [
           {
             'type': 'zipfian_with_correlated_references',
@@ -138,9 +138,9 @@ tenants = [
         'tenant_id': 7,
         'priority_level': 5,
         'database_size': 100000,
-        'minimum_buffer_size': 3000,
-        'base_buffer_size': 8000,
-        'maximum_buffer_size': 20000,
+        'minimum_buffer_size': 800,
+        'base_buffer_size': 2000,
+        'maximum_buffer_size': 5000,
         'page_accesses_dist': [
           {
             'type': 'zipfian_with_correlated_references',
@@ -160,9 +160,9 @@ tenants = [
         'tenant_id': 8,
         'priority_level': 5,
         'database_size': 110000,
-        'minimum_buffer_size': 3000,
-        'base_buffer_size': 8000,
-        'maximum_buffer_size': 20000,
+        'minimum_buffer_size': 800,
+        'base_buffer_size': 2000,
+        'maximum_buffer_size': 5000,
         'page_accesses_dist': [
           {
             'type': 'pareto_with_correlated_references',
