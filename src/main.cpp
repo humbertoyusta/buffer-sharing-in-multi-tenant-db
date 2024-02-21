@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
     } else if (solution_name == "lru_2_solution") {
       solution = new Lru2Solution(0.01);
     } else if (solution_name == "_2q_solution") {
-      solution = new _2QSolution(0.1, 0.5);
+      solution = new _2QSolution(0.4, 1.5);
     } else {
       std::cout << "Unknown solution name: " << solution_name << std::endl;
       return 1;
