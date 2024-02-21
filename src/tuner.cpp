@@ -7,6 +7,7 @@
 #include "solutions/lru_2_solution.h"
 #include "solutions/lru_policy_1_solution.h"
 #include "solutions/lru_policy_2_solution.h"
+#include <assert.h>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -28,8 +29,8 @@ int main(int argc, char **argv) {
   std::vector<double> second_tune_parameters;
 
   if (solution_name == "lru_2_solution")
-    tune_parameters = {0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.04,
-                       0.05,  0.06, 0.07,  0.08, 0.09,  0.1};
+    tune_parameters = {0.01, 0.02, 0.03, 0.04, 0.06, 0.08, 0.10,
+                       0.12, 0.14, 0.16, 0.18, 0.20, 0.22, 0.25};
 
   if (solution_name == "_2q_solution") {
     tune_parameters = {0.1, 0.1, 0.1, 0.2, 0.2, 0.2,
@@ -68,8 +69,7 @@ int main(int argc, char **argv) {
 
       if (solution_name == "lru_2_solution") {
         solution = new Lru2Solution(tune_parameter);
-      }
-      if (solution_name == "_2q_solution") {
+      } else if (solution_name == "_2q_solution") {
         solution = new _2QSolution(tune_parameter, second_tune_parameters[i]);
       } else {
         std::cout << "Solution not tunable, with name: " << solution_name
@@ -111,13 +111,15 @@ int main(int argc, char **argv) {
     if (mean_fault_score < best_mean_fault_score) {
       best_mean_fault_score = mean_fault_score;
       best_tune_parameter = tune_parameter;
-      best_second_tune_parameter = second_tune_parameters[i];
+      if (!second_tune_parameters.empty())
+        best_second_tune_parameter = second_tune_parameters[i];
     }
 
     i++;
   }
 
   std::cout << "Best parameter: " << best_tune_parameter << std::endl;
+  std::cout << "Best mean fault score: " << best_mean_fault_score << std::endl;
 
   out << YAML::EndSeq;
   out << YAML::Key << "best_tune_parameter" << YAML::Value

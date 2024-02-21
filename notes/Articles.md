@@ -1,0 +1,12 @@
+
+- [Random notes on improving the Redis LRU algorithm](http://antirez.com/news/109)
+    - Ideas about LRU-LFU applied in Redis
+- [https://redis.io/docs/reference/eviction/](https://redis.io/docs/reference/eviction/)
+    - Key eviction techniques implemented in Redis
+- [https://en.wikipedia.org/wiki/Cache_replacement_policies](https://en.wikipedia.org/wiki/Cache_replacement_policies)
+    - Wikipedia article about cache replacement policies
+- 2Q - used in Postgres
+- ARC - patented by IBM - [https://en.wikipedia.org/wiki/Adaptive_replacement_cache](https://en.wikipedia.org/wiki/Adaptive_replacement_cache)
+- [https://en.wikipedia.org/wiki/Zipf%27s_law](https://en.wikipedia.org/wiki/Zipf%27s_law) ZIPF distribution, to generate tests of page accesses
+- [https://sqlrebel.org/2022/12/05/lru-k-buffer-eviction-algorithm/](https://sqlrebel.org/2022/12/05/lru-k-buffer-eviction-algorithm/)
+- [https://dl.acm.org/doi/fullHtml/10.1145/3447579](https://dl.acm.org/doi/fullHtml/10.1145/3447579) Article for real life data gathering to use.
