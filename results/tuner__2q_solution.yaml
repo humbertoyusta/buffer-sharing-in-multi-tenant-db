@@ -2,51 +2,51 @@ solution_name: _2q_solution
 tune_parameters:
   - tune_parameter: 0.10000000000000001
     second_tune_parameter: 0.5
-    mean_fault_score: 0.041242143571922886
-    mean_hit_score: 0.01666893605905043
+    mean_fault_score: 0.089736634150924588
+    mean_hit_score: 0.11782248773058275
   - tune_parameter: 0.10000000000000001
     second_tune_parameter: 1
-    mean_fault_score: 0.041242143571922886
-    mean_hit_score: 0.01666893605905043
+    mean_fault_score: 0.089736634150924602
+    mean_hit_score: 0.11782248773058272
   - tune_parameter: 0.10000000000000001
     second_tune_parameter: 1.5
-    mean_fault_score: 0.041242143571922886
-    mean_hit_score: 0.01666893605905043
+    mean_fault_score: 0.089736634150924602
+    mean_hit_score: 0.11782248773058275
   - tune_parameter: 0.20000000000000001
     second_tune_parameter: 0.5
-    mean_fault_score: 0.041370868113531689
-    mean_hit_score: 0.016714873060615251
+    mean_fault_score: 0.092775404724750973
+    mean_hit_score: 0.11504506688897287
   - tune_parameter: 0.20000000000000001
     second_tune_parameter: 1
-    mean_fault_score: 0.041448102838496967
-    mean_hit_score: 0.016742435261554143
+    mean_fault_score: 0.094598667069046793
+    mean_hit_score: 0.11337861438400698
   - tune_parameter: 0.20000000000000001
     second_tune_parameter: 1.5
-    mean_fault_score: 0.041499592655140492
-    mean_hit_score: 0.016760810062180071
+    mean_fault_score: 0.095814175298577317
+    mean_hit_score: 0.11226764604736304
   - tune_parameter: 0.29999999999999999
     second_tune_parameter: 0.5
-    mean_fault_score: 0.045838514343150442
-    mean_hit_score: 0.01846647228448765
+    mean_fault_score: 0.097373841059645888
+    mean_hit_score: 0.11033412923998258
   - tune_parameter: 0.29999999999999999
     second_tune_parameter: 1
-    mean_fault_score: 0.049092705609157905
-    mean_hit_score: 0.019745718951218336
+    mean_fault_score: 0.098543590380447327
+    mean_hit_score: 0.10888399163444724
   - tune_parameter: 0.29999999999999999
     second_tune_parameter: 1.5
-    mean_fault_score: 0.05162374326049704
-    mean_hit_score: 0.020740688580897757
+    mean_fault_score: 0.09945339540773733
+    mean_hit_score: 0.10775610683014197
   - tune_parameter: 0.40000000000000002
     second_tune_parameter: 0.5
-    mean_fault_score: 0.062081783321724114
-    mean_hit_score: 0.024700311936450808
+    mean_fault_score: 0.10067219028307584
+    mean_hit_score: 0.10648875067897398
   - tune_parameter: 0.40000000000000002
     second_tune_parameter: 1
-    mean_fault_score: 0.070638361553637175
-    mean_hit_score: 0.027940003772812395
+    mean_fault_score: 0.10166938609017091
+    mean_hit_score: 0.10545182291892746
   - tune_parameter: 0.40000000000000002
     second_tune_parameter: 1.5
-    mean_fault_score: 0.077768843413564714
-    mean_hit_score: 0.030639746969780387
+    mean_fault_score: 0.10250038259608348
+    mean_hit_score: 0.10458771645222203
 best_tune_parameter: 0.10000000000000001
 best_second_tune_parameter: 0.5
