@@ -4,7 +4,8 @@
 void Lru2Solution::Init(const std::vector<Tenant> &tenants,
                         int total_buffer_size) {
   lru2_cache_ = Lru2(tenants, total_buffer_size,
-                     correlated_reference_period_length_multiplier_);
+                     correlated_reference_period_length_multiplier_,
+                     retained_pages_period_length_multiplier_);
   tenant_selection_policy_ = FaultRatioCacheUsedRatioPolicy();
   tenants_ = tenants;
   total_buffer_size_ = total_buffer_size;

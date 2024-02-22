@@ -8,9 +8,12 @@
 
 class Lru2Solution : public Solution {
 public:
-  Lru2Solution(double correlated_reference_period_length_multiplier)
+  Lru2Solution(double correlated_reference_period_length_multiplier,
+               double retained_pages_period_length_multiplier)
       : correlated_reference_period_length_multiplier_(
-            correlated_reference_period_length_multiplier) {}
+            correlated_reference_period_length_multiplier),
+        retained_pages_period_length_multiplier_(
+            retained_pages_period_length_multiplier) {}
 
   void Init(const std::vector<Tenant> &tenants, int total_buffer_size) override;
 
@@ -18,6 +21,7 @@ public:
 
 private:
   double correlated_reference_period_length_multiplier_;
+  double retained_pages_period_length_multiplier_;
   void UpdateScore(int tenant_id);
   void AccessPageInJudge(PageAccess page_access);
   std::vector<SingleLruCache> judge_caches_;

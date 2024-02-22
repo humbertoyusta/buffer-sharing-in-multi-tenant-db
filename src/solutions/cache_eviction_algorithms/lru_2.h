@@ -38,7 +38,8 @@ public:
   Lru2() {}
 
   Lru2(std::vector<Tenant> tenants, int total_buffer_size,
-       double correlated_reference_period_length_multiplier);
+       double correlated_reference_period_length_multiplier,
+       double retained_pages_period_length_multiplier);
 
   /**
    * @brief Access a page in the cache
@@ -97,6 +98,7 @@ private:
   int total_buffer_size_;
   int current_time_{0};
   double correlated_reference_period_length_multiplier_;
+  double retained_pages_period_length_multiplier_;
   std::vector<int> retained_period_length_;
   std::vector<int> correlated_reference_period_length_;
   std::queue<int> available_locations_;

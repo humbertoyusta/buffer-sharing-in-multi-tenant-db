@@ -3,10 +3,13 @@
 #include <iostream>
 
 Lru2::Lru2(std::vector<Tenant> tenants, int total_buffer_size,
-           double correlated_reference_period_length_multiplier_)
+           double correlated_reference_period_length_multiplier_,
+           double retained_pages_period_length_multiplier)
     : tenants_(tenants), total_buffer_size_(total_buffer_size),
       current_time_(0), correlated_reference_period_length_multiplier_(
-                            correlated_reference_period_length_multiplier_) {
+                            correlated_reference_period_length_multiplier_),
+      retained_pages_period_length_multiplier_(
+          retained_pages_period_length_multiplier) {
   for (int i = 1; i <= total_buffer_size; ++i) {
     available_locations_.push(i);
   }
@@ -20,7 +23,9 @@ Lru2::Lru2(std::vector<Tenant> tenants, int total_buffer_size,
     correlated_reference_period_length_.push_back(
         int((double)tenants[i].base_buffer_size *
             correlated_reference_period_length_multiplier_));
-    retained_period_length_.push_back(tenants[i].base_buffer_size * 2);
+    retained_period_length_.push_back(
+        int((double)tenants[i].base_buffer_size *
+            retained_pages_period_length_multiplier));
   }
 }
 

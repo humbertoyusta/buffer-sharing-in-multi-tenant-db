@@ -28,9 +28,14 @@ int main(int argc, char **argv) {
   std::vector<double> tune_parameters;
   std::vector<double> second_tune_parameters;
 
-  if (solution_name == "lru_2_solution")
-    tune_parameters = {0.01, 0.02, 0.03, 0.04, 0.06, 0.08, 0.10,
-                       0.12, 0.14, 0.16, 0.18, 0.20, 0.22, 0.25};
+  if (solution_name == "lru_2_solution") {
+    tune_parameters = {0.05, 0.05, 0.05, 0.1,  0.1,  0.1,  0.15, 0.15, 0.15,
+                       0.2,  0.2,  0.2,  0.25, 0.25, 0.25, 0.3,  0.3,  0.3};
+    second_tune_parameters = {
+        0.5, 1.0, 1.5, 0.5, 1.0, 1.5, 0.5, 1.0, 1.5,
+        0.5, 1.0, 1.5, 0.5, 1.0, 1.5, 0.5, 1.0, 1.5,
+    };
+  }
 
   if (solution_name == "_2q_solution") {
     tune_parameters = {0.1, 0.1, 0.1, 0.2, 0.2, 0.2,
@@ -68,7 +73,7 @@ int main(int argc, char **argv) {
       Solution *solution = nullptr;
 
       if (solution_name == "lru_2_solution") {
-        solution = new Lru2Solution(tune_parameter);
+        solution = new Lru2Solution(tune_parameter, second_tune_parameters[i]);
       } else if (solution_name == "_2q_solution") {
         solution = new _2QSolution(tune_parameter, second_tune_parameters[i]);
       } else {
