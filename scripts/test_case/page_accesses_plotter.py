@@ -5,11 +5,16 @@ import seaborn as sns
 
 
 class PageAccessesPlotter:
-    def __init__(self, page_accesses, tenant_number: int, test_number: int):
+    def __init__(
+        self, page_accesses, tenant_number: int, test_number: int, test_type: str
+    ):
         self.page_accesses = page_accesses
         self.tenant_number = tenant_number
         self.test_number = test_number
-        self.page_accesses_per_tenant = self._counting_renumber(page_accesses, tenant_number)
+        self.test_type = test_type
+        self.page_accesses_per_tenant = self._counting_renumber(
+            page_accesses, tenant_number
+        )
 
     def plot(self):
         self.plot_histograms()
@@ -29,9 +34,11 @@ class PageAccessesPlotter:
             ax.set_title(f"Tenant {i + 1}")
 
         for i in range(self.tenant_number, num_columns * num_rows):
-            axes[i // num_columns, i % num_columns].axis('off')
+            axes[i // num_columns, i % num_columns].axis("off")
 
-        plt.savefig(f"test_cases/test_case_{self.test_number}/page_accesses_histograms.png")
+        plt.savefig(
+            f"test_cases/{self.test_type}/test_case_{self.test_number}/page_accesses_histograms.png"
+        )
 
     def plot_distributions(self):
         num_columns = 3
@@ -47,9 +54,11 @@ class PageAccessesPlotter:
             ax.set_title(f"Tenant {i + 1}")
 
         for i in range(self.tenant_number, num_columns * num_rows):
-            axes[i // num_columns, i % num_columns].axis('off')
+            axes[i // num_columns, i % num_columns].axis("off")
 
-        plt.savefig(f"test_cases/test_case_{self.test_number}/page_accesses_distributions.png")
+        plt.savefig(
+            f"test_cases/{self.test_type}/test_case_{self.test_number}/page_accesses_distributions.png"
+        )
         plt.close()
 
     def _renumber(self, page_accesses_per_tenant):
@@ -59,14 +68,16 @@ class PageAccessesPlotter:
                 current += 1
             page_accesses_per_tenant[i] = current
         return
-    
+
     def _counting_renumber(self, page_accesses, tenant_number):
-        '''Takes a list of page accesses and renumbers them so that the most frequent 
-        page accessed is 1, the second most frequent page accessed is 2, etc, keeping 
+        """Takes a list of page accesses and renumbers them so that the most frequent
+        page accessed is 1, the second most frequent page accessed is 2, etc, keeping
         the frequencies the same. Used for plotting page accesses distributions, without
         considering the number (ID) of the page accessed, instead considering the frequency
-        '''
-        page_access_freq_per_tenant = [[0] * (constants.MAX_DATABASE_SIZE + 1) for _ in range(tenant_number + 1)]
+        """
+        page_access_freq_per_tenant = [
+            [0] * (constants.MAX_DATABASE_SIZE + 1) for _ in range(tenant_number + 1)
+        ]
 
         for page_access in page_accesses:
             page_access_freq_per_tenant[page_access[0]][page_access[1]] += 1
@@ -82,5 +93,3 @@ class PageAccessesPlotter:
                     result[i].extend([j] * page_access_freq_per_tenant[i][j])
 
         return result
-
-

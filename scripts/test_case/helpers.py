@@ -2,27 +2,32 @@ import numpy as np
 
 np.random.seed(0)
 
-def generate_zipfian_array (parameter: float, length: int, max_value: int) -> np.array:
+
+def generate_zipfian_array(parameter: float, length: int, max_value: int) -> np.array:
     return (np.random.zipf(parameter, length) - 1) % max_value + 1
 
-def generate_uniform_array (length: int, max_value: int) -> np.array:
+
+def generate_uniform_array(length: int, max_value: int) -> np.array:
     return np.random.randint(1, max_value + 1, length)
 
-def generate_normal_array (variance: float, length: int, max_value: int) -> np.array:
+
+def generate_normal_array(variance: float, length: int, max_value: int) -> np.array:
     return (abs(np.random.normal(0, variance, length)).astype(int)) % max_value + 1
 
-def generate_pareto_array (parameter: float, length: int, max_value: int) -> np.array:
+
+def generate_pareto_array(parameter: float, length: int, max_value: int) -> np.array:
     return (np.random.pareto(parameter, length) % max_value).astype(int) + 1
 
-def generate_normal_with_correlated_references (
-        variance: float, 
-        length: int, 
-        max_value: int, 
-        max_correlated_references: int,
-        first_correlated_reference_min_distance: float, 
-        first_correlated_reference_max_distance: float, 
-        correlated_reference_distance_growth_factor: float
-    ) -> np.array:
+
+def generate_normal_with_correlated_references(
+    variance: float,
+    length: int,
+    max_value: int,
+    max_correlated_references: int,
+    first_correlated_reference_min_distance: float,
+    first_correlated_reference_max_distance: float,
+    correlated_reference_distance_growth_factor: float,
+) -> np.array:
     arr = np.zeros(length).astype(int)
     for i in range(length):
         if arr[i] == 0:
@@ -39,22 +44,27 @@ def generate_normal_with_correlated_references (
                     break
                 arr[i + int(dist)] = arr[i]
 
-                correlated_reference_min_distance *= correlated_reference_distance_growth_factor
-                correlated_reference_max_distance *= correlated_reference_distance_growth_factor
+                correlated_reference_min_distance *= (
+                    correlated_reference_distance_growth_factor
+                )
+                correlated_reference_max_distance *= (
+                    correlated_reference_distance_growth_factor
+                )
                 dist *= np.random.uniform(
-                    correlated_reference_min_distance, 
+                    correlated_reference_min_distance,
                     correlated_reference_max_distance,
                 )
     return arr
 
-def generate_uniform_with_correlated_references (
-        length: int, 
-        max_value: int, 
-        max_correlated_references: int,
-        first_correlated_reference_min_distance: float, 
-        first_correlated_reference_max_distance: float, 
-        correlated_reference_distance_growth_factor: float
-    ) -> np.array:
+
+def generate_uniform_with_correlated_references(
+    length: int,
+    max_value: int,
+    max_correlated_references: int,
+    first_correlated_reference_min_distance: float,
+    first_correlated_reference_max_distance: float,
+    correlated_reference_distance_growth_factor: float,
+) -> np.array:
     arr = np.zeros(length).astype(int)
     for i in range(length):
         if arr[i] == 0:
@@ -71,23 +81,28 @@ def generate_uniform_with_correlated_references (
                     break
                 arr[i + int(dist)] = arr[i]
 
-                correlated_reference_min_distance *= correlated_reference_distance_growth_factor
-                correlated_reference_max_distance *= correlated_reference_distance_growth_factor
+                correlated_reference_min_distance *= (
+                    correlated_reference_distance_growth_factor
+                )
+                correlated_reference_max_distance *= (
+                    correlated_reference_distance_growth_factor
+                )
                 dist *= np.random.uniform(
-                    correlated_reference_min_distance, 
+                    correlated_reference_min_distance,
                     correlated_reference_max_distance,
                 )
     return arr
 
-def generate_pareto_with_correlated_references (
-        parameter: float, 
-        length: int, 
-        max_value: int, 
-        max_correlated_references: int,
-        first_correlated_reference_min_distance: float, 
-        first_correlated_reference_max_distance: float, 
-        correlated_reference_distance_growth_factor: float
-    ) -> np.array:
+
+def generate_pareto_with_correlated_references(
+    parameter: float,
+    length: int,
+    max_value: int,
+    max_correlated_references: int,
+    first_correlated_reference_min_distance: float,
+    first_correlated_reference_max_distance: float,
+    correlated_reference_distance_growth_factor: float,
+) -> np.array:
     arr = np.zeros(length).astype(int)
     for i in range(length):
         if arr[i] == 0:
@@ -104,23 +119,28 @@ def generate_pareto_with_correlated_references (
                     break
                 arr[i + int(dist)] = arr[i]
 
-                correlated_reference_min_distance *= correlated_reference_distance_growth_factor
-                correlated_reference_max_distance *= correlated_reference_distance_growth_factor
+                correlated_reference_min_distance *= (
+                    correlated_reference_distance_growth_factor
+                )
+                correlated_reference_max_distance *= (
+                    correlated_reference_distance_growth_factor
+                )
                 dist *= np.random.uniform(
-                    correlated_reference_min_distance, 
+                    correlated_reference_min_distance,
                     correlated_reference_max_distance,
                 )
     return arr
 
-def generate_zipfian_with_correlated_references (
-        parameter: float, 
-        length: int, 
-        max_value: int, 
-        max_correlated_references: int,
-        first_correlated_reference_min_distance: float, 
-        first_correlated_reference_max_distance: float, 
-        correlated_reference_distance_growth_factor: float
-    ) -> np.array:
+
+def generate_zipfian_with_correlated_references(
+    parameter: float,
+    length: int,
+    max_value: int,
+    max_correlated_references: int,
+    first_correlated_reference_min_distance: float,
+    first_correlated_reference_max_distance: float,
+    correlated_reference_distance_growth_factor: float,
+) -> np.array:
     arr = np.zeros(length).astype(int)
     for i in range(length):
         if arr[i] == 0:
@@ -137,10 +157,14 @@ def generate_zipfian_with_correlated_references (
                     break
                 arr[i + int(dist)] = arr[i]
 
-                correlated_reference_min_distance *= correlated_reference_distance_growth_factor
-                correlated_reference_max_distance *= correlated_reference_distance_growth_factor
+                correlated_reference_min_distance *= (
+                    correlated_reference_distance_growth_factor
+                )
+                correlated_reference_max_distance *= (
+                    correlated_reference_distance_growth_factor
+                )
                 dist *= np.random.uniform(
-                    correlated_reference_min_distance, 
+                    correlated_reference_min_distance,
                     correlated_reference_max_distance,
                 )
     return arr
