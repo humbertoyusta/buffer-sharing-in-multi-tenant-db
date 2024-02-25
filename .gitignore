@@ -7,3 +7,5 @@ build/
 __pycache__/
 .DS_Store
 input.txt
+data/__MACOSX/
+data/loc-brightkite_totalCheckins.txt

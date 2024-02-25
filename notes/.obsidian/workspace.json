@@ -43,9 +43,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "e20076d77aefce9d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Articles.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       },
       {
         "id": "f0cdef386a48d8c0",
@@ -187,7 +199,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ac76ed49480fe7c4",
+  "active": "e20076d77aefce9d",
   "lastOpenFiles": [
     "Cost function.md",
     "Articles.md",
