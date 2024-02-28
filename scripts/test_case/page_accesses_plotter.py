@@ -6,7 +6,12 @@ import seaborn as sns
 
 class PageAccessesPlotter:
     def __init__(
-        self, page_accesses, tenant_number: int, test_number: int, test_type: str
+        self,
+        page_accesses,
+        tenant_number: int,
+        test_number: int,
+        test_type: str,
+        exp_number: int = None,
     ):
         self.page_accesses = page_accesses
         self.tenant_number = tenant_number
@@ -15,6 +20,12 @@ class PageAccessesPlotter:
         self.page_accesses_per_tenant = self._counting_renumber(
             page_accesses, tenant_number
         )
+        if exp_number:
+            self.directory = (
+                f"test_cases/{test_type}/exp_{exp_number}/test_case_{test_number}/"
+            )
+        else:
+            self.directory = f"test_cases/{test_type}/test_case_{test_number}/"
 
     def plot(self):
         self.plot_histograms()
@@ -36,9 +47,7 @@ class PageAccessesPlotter:
         for i in range(self.tenant_number, num_columns * num_rows):
             axes[i // num_columns, i % num_columns].axis("off")
 
-        plt.savefig(
-            f"test_cases/{self.test_type}/test_case_{self.test_number}/page_accesses_histograms.png"
-        )
+        plt.savefig(self.directory + "page_accesses_histograms.png")
 
     def plot_distributions(self):
         num_columns = 3
@@ -56,9 +65,7 @@ class PageAccessesPlotter:
         for i in range(self.tenant_number, num_columns * num_rows):
             axes[i // num_columns, i % num_columns].axis("off")
 
-        plt.savefig(
-            f"test_cases/{self.test_type}/test_case_{self.test_number}/page_accesses_distributions.png"
-        )
+        plt.savefig(self.directory + "page_accesses_distributions.png")
         plt.close()
 
     def _renumber(self, page_accesses_per_tenant):

@@ -3,7 +3,13 @@ from . import constants
 
 
 class Validator:
-    def __init__(self, test_number: int, test_type: str, has_description: bool = True):
+    def __init__(
+        self,
+        test_number: int,
+        test_type: str,
+        has_description: bool = True,
+        exp_number: int = None,
+    ):
         self.test_number = test_number
         self.has_description = has_description
         if has_description:
@@ -20,7 +26,12 @@ class Validator:
             ),
             "tenants": self.test_case.tenants if has_description else [],
         }
-        self.input_file = f"test_cases/{test_type}/test_case_{test_number}/input.txt"
+        if exp_number:
+            self.input_file = f"test_cases/{test_type}/exp_{exp_number}/test_case_{test_number}/input.txt"
+        else:
+            self.input_file = (
+                f"test_cases/{test_type}/test_case_{test_number}/input.txt"
+            )
 
     def validate_total_buffer_size(self, total_buffer_size: int):
         assert (

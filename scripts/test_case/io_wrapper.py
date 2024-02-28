@@ -2,10 +2,17 @@ import os
 
 
 class IoWrapper:
-    def __init__(self, test_case, test_number: int, test_type: str):
+    def __init__(
+        self, test_case, test_number: int, test_type: str, exp_number: int = None
+    ):
         self.test_case = test_case
         self.test_number = test_number
-        self.input_file = f"test_cases/{test_type}/test_case_{test_number}/input.txt"
+        if exp_number:
+            self.input_file = f"test_cases/{test_type}/exp_{exp_number}/test_case_{test_number}/input.txt"
+        else:
+            self.input_file = (
+                f"test_cases/{test_type}/test_case_{test_number}/input.txt"
+            )
 
     def print_test_case(self):
         os.makedirs(os.path.dirname(self.input_file), exist_ok=True)
