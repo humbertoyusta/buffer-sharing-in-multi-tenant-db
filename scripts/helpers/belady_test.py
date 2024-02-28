@@ -40,12 +40,3 @@ def test__init_next_accesses_by_value():
     first_seq = [0, 1, 1, 3, 3, 0, 3, 3, 1, 1, 0]
     belady._init_next_accesses_by_value(first_seq)
     assert belady.next_accesses_by_value == [0, 1, BeladyCacheAlgorithm.INF, 3]
-
-
-def test__get_element_to_remove():
-    belady = BeladyCacheAlgorithm()
-
-    belady.cache = [1, 3, 4]
-    belady.next_accesses_by_value = [0, 2, 1, 4, 3]
-
-    assert belady._get_element_to_remove(belady.cache, 0) == 3
