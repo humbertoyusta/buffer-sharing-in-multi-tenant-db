@@ -4,15 +4,23 @@ executable=$1
 
 sol=$2
 
-if ! [[ $3 =~ ^[0-9]+$ ]]; then
-    first_test=1
-else
-    first_test=$3
-fi
-if ! [[ $4 =~ ^[0-9]+$ ]]; then
-    last_test=14
-else
-    last_test=$4
+test_type=$3
+
+if [ $# = 3 ]; then
+  ./build/src/$executable "$sol" "$test_type"
+  exit 0
 fi
 
-./build/src/$executable "$sol" "$first_test" "$last_test"
+first_test=$4
+
+if [ $# = 4 ]; then
+  ./build/src/$executable "$sol" "$test_type" "$first_test"
+  exit 0
+fi
+
+last_test=$5
+
+if [ $# = 5 ]; then
+  ./build/src/$executable "$sol" "$test_type" "$first_test" "$last_test"
+  exit 0
+fi
