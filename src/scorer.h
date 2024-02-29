@@ -16,7 +16,7 @@ struct TestScore {
 
 class Scorer {
 public:
-  Scorer(std::string solution_name);
+  Scorer(std::string solution_name, std::string test_type);
 
   TestScore GetTestScore(std::vector<Tenant> tenants,
                          std::vector<int> judge_page_hits_per_tenant,
@@ -32,6 +32,7 @@ private:
   static double ratio(const int a, const int b);
   static double square(const double a);
   std::string solution_name_;
+  std::string test_type_;
   std::vector<Tenant> tenants_;
 };
 

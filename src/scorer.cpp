@@ -5,7 +5,8 @@
 #include <numeric>
 #include <yaml-cpp/yaml.h>
 
-Scorer::Scorer(std::string solution_name) : solution_name_(solution_name) {}
+Scorer::Scorer(std::string solution_name, std::string test_type)
+    : solution_name_(solution_name), test_type_(test_type) {}
 
 double Scorer::ratio(const int a, const int b) {
   return static_cast<double>(a) / static_cast<double>(b);
@@ -73,7 +74,8 @@ void Scorer::ReportScores(std::vector<TestScore> test_scores) {
   auto [mean_fault_score, mean_hit_score] = GetMeanScores(test_scores);
 
   int test_number = 1;
-  std::string filepath = "results/" + solution_name_ + ".yaml";
+  std::string filepath =
+      "results/" + solution_name_ + "." + test_type_ + ".yaml";
   YAML::Emitter out;
   out << YAML::BeginMap;
   out << YAML::Key << "solution_name" << YAML::Value << solution_name_;
