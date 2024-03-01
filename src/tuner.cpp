@@ -13,13 +13,25 @@
 #include <string>
 #include <yaml-cpp/yaml.h>
 
+std::map<std::string, int> TEST_TYPE_TO_TEST_COUNT = {{"random", 16},
+                                                      {"brightkite", 6},
+                                                      {"citibike_exp_1", 4},
+                                                      {"citibike_exp_2", 4},
+                                                      {"citibike_exp_3", 4}};
+
 int main(int argc, char **argv) {
   std::string solution_name = argv[1];
-  int first_test_number = std::stoi(argv[2]);
-  int last_test_number = std::stoi(argv[3]);
 
-  auto scorer = Scorer(solution_name);
-  std::vector<TestScore> test_scores;
+  std::string test_type = argv[2];
+  std::vector<std::string> test_types;
+  if (test_type == "all")
+    test_types = {"random", "brightkite", "citibike_exp_1", "citibike_exp_2",
+                  "citibike_exp_3"};
+  else
+    test_types = {test_type};
+
+  int first_test_number = (argc >= 4) ? std::stoi(argv[3]) : 1;
+  int last_test_number = (argc >= 5) ? std::stoi(argv[4]) : 0;
 
   double best_tune_parameter = -1;
   double best_second_tune_parameter = -1;
@@ -44,7 +56,11 @@ int main(int argc, char **argv) {
                               0.5, 1.0, 1.5, 0.5, 1.0, 1.5};
   }
 
-  std::string filepath = "results/tuner_" + solution_name + ".yaml";
+  auto scorer = Scorer(solution_name, test_type);
+  std::vector<TestScore> test_scores;
+
+  std::string filepath =
+      "results/tuner_" + solution_name + "." + test_type + ".yaml";
   YAML::Emitter out;
   out << YAML::BeginMap;
   out << YAML::Key << "solution_name" << YAML::Value << solution_name;
@@ -63,44 +79,55 @@ int main(int argc, char **argv) {
       out << YAML::Key << "second_tune_parameter" << YAML::Value
           << second_tune_parameters[i];
 
-    for (int test_number = first_test_number; test_number <= last_test_number;
-         test_number++) {
-      auto input_reader = InputReader();
-      auto [tenants, page_accesses, total_buffer_size] =
-          input_reader.ReadInput(test_number);
+    for (std::string current_test_type : test_types) {
 
-      auto checker = Checker();
-      Solution *solution = nullptr;
-
-      if (solution_name == "lru_2_solution") {
-        solution = new Lru2Solution(tune_parameter, second_tune_parameters[i]);
-      } else if (solution_name == "_2q_solution") {
-        solution = new _2QSolution(tune_parameter, second_tune_parameters[i]);
-      } else {
-        std::cout << "Solution not tunable, with name: " << solution_name
-                  << std::endl;
-        return 1;
+      int actual_last_test_number = last_test_number;
+      if (last_test_number == 0) {
+        actual_last_test_number = TEST_TYPE_TO_TEST_COUNT[current_test_type];
       }
 
-      std::cout << "Running test " << test_number << " with solution "
-                << solution_name << " and tune parameter " << tune_parameter;
-      if (second_tune_parameters.size() > 0)
-        std::cout << ", " << second_tune_parameters[i];
-      std::cout << std::endl;
+      for (int test_number = first_test_number;
+           test_number <= actual_last_test_number; test_number++) {
+        auto input_reader = InputReader();
+        auto [tenants, page_accesses, total_buffer_size] =
+            input_reader.ReadInput(current_test_type, test_number);
 
-      auto [judge_page_hits_per_tenant, judge_page_faults_per_tenant,
-            solution_page_hits_per_tenant, solution_page_faults_per_tenant] =
-          checker.CheckSolution(solution, tenants, page_accesses,
-                                total_buffer_size);
+        auto checker = Checker();
+        Solution *solution = nullptr;
 
-      std::cout << "Test " << test_number << " with solution " << solution_name
-                << " finished" << std::endl;
+        if (solution_name == "lru_2_solution") {
+          solution =
+              new Lru2Solution(tune_parameter, second_tune_parameters[i]);
+        } else if (solution_name == "_2q_solution") {
+          solution = new _2QSolution(tune_parameter, second_tune_parameters[i]);
+        } else {
+          std::cout << "Solution not tunable, with name: " << solution_name
+                    << std::endl;
+          return 1;
+        }
 
-      test_scores.push_back(scorer.GetTestScore(
-          tenants, judge_page_hits_per_tenant, judge_page_faults_per_tenant,
-          solution_page_hits_per_tenant, solution_page_faults_per_tenant));
+        std::cout << "Running test " << current_test_type << " - "
+                  << test_number << " with solution " << solution_name
+                  << " and tune parameter " << tune_parameter;
+        if (second_tune_parameters.size() > 0)
+          std::cout << ", " << second_tune_parameters[i];
+        std::cout << std::endl;
 
-      delete solution;
+        auto [judge_page_hits_per_tenant, judge_page_faults_per_tenant,
+              solution_page_hits_per_tenant, solution_page_faults_per_tenant] =
+            checker.CheckSolution(solution, tenants, page_accesses,
+                                  total_buffer_size);
+
+        std::cout << "Test " << current_test_type << " - " << test_number
+                  << " with solution " << solution_name << " finished"
+                  << std::endl;
+
+        test_scores.push_back(scorer.GetTestScore(
+            tenants, judge_page_hits_per_tenant, judge_page_faults_per_tenant,
+            solution_page_hits_per_tenant, solution_page_faults_per_tenant));
+
+        delete solution;
+      }
     }
 
     auto [mean_fault_score, mean_hit_score] = scorer.GetMeanScores(test_scores);
