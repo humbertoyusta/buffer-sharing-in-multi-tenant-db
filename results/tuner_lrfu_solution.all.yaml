@@ -1,0 +1,16 @@
+solution_name: lrfu_solution
+tune_parameters:
+  - tune_parameter: 0.001
+    mean_fault_score: 0.06852283080414201
+    mean_hit_score: 0.10977290298522106
+  - tune_parameter: 0.0001
+    mean_fault_score: 0.066284730166783865
+    mean_hit_score: 0.10158970668324259
+  - tune_parameter: 1.0000000000000001e-05
+    mean_fault_score: 0.085331221815462391
+    mean_hit_score: 0.093625219291257236
+  - tune_parameter: 9.9999999999999995e-07
+    mean_fault_score: 0.10811538804848234
+    mean_hit_score: 0.095211703179791871
+best_tune_parameter: 0.0001
+best_second_tune_parameter: -1
