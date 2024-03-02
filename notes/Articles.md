@@ -6,7 +6,10 @@
 - [https://en.wikipedia.org/wiki/Cache_replacement_policies](https://en.wikipedia.org/wiki/Cache_replacement_policies)
     - Wikipedia article about cache replacement policies
 - 2Q - used in Postgres
-- ARC - patented by IBM - [https://en.wikipedia.org/wiki/Adaptive_replacement_cache](https://en.wikipedia.org/wiki/Adaptive_replacement_cache)
+	- https://www.vldb.org/conf/1994/P439.PDF
+- ARC - patented by IBM -
+	- [https://en.wikipedia.org/wiki/Adaptive_replacement_cache](https://en.wikipedia.org/wiki/Adaptive_replacement_cache)
+	- https://www2.cs.uh.edu/~paris/7360/PAPERS03/arcfast.pdf
 - [https://en.wikipedia.org/wiki/Zipf%27s_law](https://en.wikipedia.org/wiki/Zipf%27s_law) ZIPF distribution, to generate tests of page accesses
 - [https://sqlrebel.org/2022/12/05/lru-k-buffer-eviction-algorithm/](https://sqlrebel.org/2022/12/05/lru-k-buffer-eviction-algorithm/)
 - [https://dl.acm.org/doi/fullHtml/10.1145/3447579](https://dl.acm.org/doi/fullHtml/10.1145/3447579) Article for real life data gathering to use.

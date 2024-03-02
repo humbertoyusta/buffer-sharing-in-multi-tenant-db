@@ -62,7 +62,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Extras to add.md",
+                "file": "To-do.md",
                 "mode": "source",
                 "source": false
               }
@@ -150,7 +150,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Extras to add.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -167,7 +166,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Extras to add.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -189,9 +187,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Extras to add.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -211,12 +207,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "d33538d059d0650c",
+  "active": "c1525c41712f6b76",
   "lastOpenFiles": [
+    "To-do.md",
     "Untitled.canvas",
-    "Articles.md",
-    "Cost function.md",
     "Extras to add.md",
-    "To-do.md"
+    "Articles.md",
+    "Cost function.md"
   ]
 }
