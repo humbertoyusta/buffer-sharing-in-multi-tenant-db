@@ -4,6 +4,7 @@
 #include "solutions/_2q_solution.h"
 #include "solutions/lfu_policy_1_solution.h"
 #include "solutions/lfu_policy_2_solution.h"
+#include "solutions/lrfu_solution.h"
 #include "solutions/lru_2_solution.h"
 #include "solutions/lru_policy_1_solution.h"
 #include "solutions/lru_policy_2_solution.h"
@@ -62,6 +63,8 @@ int main(int argc, char **argv) {
         solution = new Lru2Solution(0.1, 1.5);
       } else if (solution_name == "_2q_solution") {
         solution = new _2QSolution(0.1, 0.5);
+      } else if (solution_name == "lrfu_solution") {
+        solution = new LRFUSolution(0.0001);
       } else {
         std::cout << "Unknown solution name: " << solution_name << std::endl;
         return 1;

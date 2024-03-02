@@ -4,6 +4,7 @@
 #include "solutions/_2q_solution.h"
 #include "solutions/lfu_policy_1_solution.h"
 #include "solutions/lfu_policy_2_solution.h"
+#include "solutions/lrfu_solution.h"
 #include "solutions/lru_2_solution.h"
 #include "solutions/lru_policy_1_solution.h"
 #include "solutions/lru_policy_2_solution.h"
@@ -56,6 +57,10 @@ int main(int argc, char **argv) {
                               0.5, 1.0, 1.5, 0.5, 1.0, 1.5};
   }
 
+  if (solution_name == "lrfu_solution") {
+    tune_parameters = {0.001, 0.0001, 0.00001, 0.000001};
+  }
+
   auto scorer = Scorer(solution_name, test_type);
   std::vector<TestScore> test_scores;
 
@@ -100,6 +105,8 @@ int main(int argc, char **argv) {
               new Lru2Solution(tune_parameter, second_tune_parameters[i]);
         } else if (solution_name == "_2q_solution") {
           solution = new _2QSolution(tune_parameter, second_tune_parameters[i]);
+        } else if (solution_name == "lrfu_solution") {
+          solution = new LRFUSolution(tune_parameter);
         } else {
           std::cout << "Solution not tunable, with name: " << solution_name
                     << std::endl;

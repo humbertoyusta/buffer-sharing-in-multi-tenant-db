@@ -10,10 +10,12 @@ add_library(src
     solutions/cache_eviction_algorithms/lru_2.cpp
     solutions/cache_eviction_algorithms/lfu.cpp
     solutions/cache_eviction_algorithms/_2q.cpp
+    solutions/cache_eviction_algorithms/lrfu.cpp
     solutions/lru_policy_1_solution.cpp
     solutions/lru_policy_2_solution.cpp
     solutions/lru_2_solution.cpp
     solutions/_2q_solution.cpp
+    solutions/lrfu_solution.cpp
     solutions/lfu_policy_1_solution.cpp
     solutions/lfu_policy_2_solution.cpp
     scorer.cpp
