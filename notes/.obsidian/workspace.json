@@ -62,7 +62,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "To-do.md",
+                "file": "Articles.md",
                 "mode": "source",
                 "source": false
               }
@@ -150,6 +150,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Articles.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -166,6 +167,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Articles.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -187,7 +189,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Articles.md"
+              }
             }
           }
         ]
@@ -207,12 +211,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "c1525c41712f6b76",
+  "active": "d33538d059d0650c",
   "lastOpenFiles": [
+    "Cost function.md",
+    "Extras to add.md",
     "To-do.md",
     "Untitled.canvas",
-    "Extras to add.md",
-    "Articles.md",
-    "Cost function.md"
+    "Articles.md"
   ]
 }

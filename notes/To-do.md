@@ -6,7 +6,8 @@ Policies to try
 * Adding/removing squares/roots
 
 Algorithms to try:
-* LRFU
+* LRFU (Done)
+	* Add correlated references version of LRFU
 * ARC
 * Window tinyLFU
 * Dynamic switch (good but slow and not a lot of practical utility) - nweeks idea
