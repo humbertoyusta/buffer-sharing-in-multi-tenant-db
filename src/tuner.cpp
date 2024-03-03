@@ -8,6 +8,7 @@
 #include "solutions/lru_2_solution.h"
 #include "solutions/lru_policy_1_solution.h"
 #include "solutions/lru_policy_2_solution.h"
+#include "solutions/mq_solution.h"
 #include <assert.h>
 #include <fstream>
 #include <iostream>
@@ -36,10 +37,12 @@ int main(int argc, char **argv) {
 
   double best_tune_parameter = -1;
   double best_second_tune_parameter = -1;
+  double best_third_tune_parameter = -1;
   double best_mean_fault_score = INT_MAX;
 
   std::vector<double> tune_parameters;
   std::vector<double> second_tune_parameters;
+  std::vector<double> third_tune_parameters;
 
   if (solution_name == "lru_2_solution") {
     tune_parameters = {0.05, 0.05, 0.05, 0.1,  0.1,  0.1,  0.15, 0.15, 0.15,
@@ -61,6 +64,16 @@ int main(int argc, char **argv) {
     tune_parameters = {0.001, 0.0001, 0.00001, 0.000001};
   }
 
+  if (solution_name == "mq_solution") {
+    tune_parameters = {3, 5, 7, 3, 5, 7, 3, 5, 7, 3, 5, 7, 3, 5, 7, 3, 5, 7};
+    second_tune_parameters = {0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2,
+                              0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2};
+    third_tune_parameters = {
+        0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+        1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+    };
+  }
+
   auto scorer = Scorer(solution_name, test_type);
   std::vector<TestScore> test_scores;
 
@@ -76,6 +89,8 @@ int main(int argc, char **argv) {
     std::cout << "Tuning parameter: " << tune_parameter;
     if (second_tune_parameters.size() > 0)
       std::cout << ", " << second_tune_parameters[i];
+    if (third_tune_parameters.size() > 0)
+      std::cout << ", " << third_tune_parameters[i];
     std::cout << std::endl;
 
     out << YAML::BeginMap;
@@ -83,6 +98,9 @@ int main(int argc, char **argv) {
     if (second_tune_parameters.size() > 0)
       out << YAML::Key << "second_tune_parameter" << YAML::Value
           << second_tune_parameters[i];
+    if (third_tune_parameters.size() > 0)
+      out << YAML::Key << "third_tune_parameter" << YAML::Value
+          << third_tune_parameters[i];
 
     for (std::string current_test_type : test_types) {
 
@@ -107,6 +125,10 @@ int main(int argc, char **argv) {
           solution = new _2QSolution(tune_parameter, second_tune_parameters[i]);
         } else if (solution_name == "lrfu_solution") {
           solution = new LRFUSolution(tune_parameter);
+        } else if (solution_name == "mq_solution") {
+          solution = new MQSolution(int(std::round(tune_parameter)),
+                                    second_tune_parameters[i],
+                                    third_tune_parameters[i]);
         } else {
           std::cout << "Solution not tunable, with name: " << solution_name
                     << std::endl;
@@ -118,6 +140,8 @@ int main(int argc, char **argv) {
                   << " and tune parameter " << tune_parameter;
         if (second_tune_parameters.size() > 0)
           std::cout << ", " << second_tune_parameters[i];
+        if (third_tune_parameters.size() > 0)
+          std::cout << ", " << third_tune_parameters[i];
         std::cout << std::endl;
 
         auto [judge_page_hits_per_tenant, judge_page_faults_per_tenant,
@@ -152,12 +176,20 @@ int main(int argc, char **argv) {
       best_tune_parameter = tune_parameter;
       if (!second_tune_parameters.empty())
         best_second_tune_parameter = second_tune_parameters[i];
+      if (!third_tune_parameters.empty())
+        best_third_tune_parameter = third_tune_parameters[i];
     }
 
     i++;
   }
 
   std::cout << "Best parameter: " << best_tune_parameter << std::endl;
+  if (!second_tune_parameters.empty())
+    std::cout << "Best second parameter: " << best_second_tune_parameter
+              << std::endl;
+  if (!third_tune_parameters.empty())
+    std::cout << "Best third parameter: " << best_third_tune_parameter
+              << std::endl;
   std::cout << "Best mean fault score: " << best_mean_fault_score << std::endl;
 
   out << YAML::EndSeq;
@@ -165,6 +197,8 @@ int main(int argc, char **argv) {
       << best_tune_parameter;
   out << YAML::Key << "best_second_tune_parameter" << YAML::Value
       << best_second_tune_parameter;
+  out << YAML::Key << "best_third_tune_parameter" << YAML::Value
+      << best_third_tune_parameter;
   out << YAML::EndMap;
 
   std::ofstream file(filepath);
