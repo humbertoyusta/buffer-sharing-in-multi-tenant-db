@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
       } else if (solution_name == "lrfu_solution") {
         solution = new LRFUSolution(0.0001);
       } else if (solution_name == "mq_solution") {
-        solution = new MQSolution(3, 0.1, 0.5);
+        solution = new MQSolution(7, 0.2, 1.0);
       } else {
         std::cout << "Unknown solution name: " << solution_name << std::endl;
         return 1;
