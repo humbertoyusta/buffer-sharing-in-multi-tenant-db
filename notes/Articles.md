@@ -20,3 +20,5 @@
 - [https://sqlrebel.org/2022/12/05/lru-k-buffer-eviction-algorithm/](https://sqlrebel.org/2022/12/05/lru-k-buffer-eviction-algorithm/)
 - [https://dl.acm.org/doi/fullHtml/10.1145/3447579](https://dl.acm.org/doi/fullHtml/10.1145/3447579) Article for real life data gathering to use.
 - https://u.cs.biu.ac.il/~wisemay/2os/lru/lrfu.pdf
+- For general things to reference
+	- https://class.ece.iastate.edu/tyagi/cpre581/papers/ISCA16Belady.pdf
