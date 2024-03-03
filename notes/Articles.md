@@ -12,6 +12,10 @@
 	- https://www2.cs.uh.edu/~paris/7360/PAPERS03/arcfast.pdf
 - MQ
 	- https://static.usenix.org/event/usenix01/full_papers/zhou/zhou.pdf
+- MySQL variation of LRU
+	- https://dev.mysql.com/doc/refman/8.0/en/innodb-buffer-pool.html
+- LIRS
+	- https://ranger.uta.edu/~sjiang/pubs/papers/jiang02_LIRS.pdf
 - [https://en.wikipedia.org/wiki/Zipf%27s_law](https://en.wikipedia.org/wiki/Zipf%27s_law) ZIPF distribution, to generate tests of page accesses
 - [https://sqlrebel.org/2022/12/05/lru-k-buffer-eviction-algorithm/](https://sqlrebel.org/2022/12/05/lru-k-buffer-eviction-algorithm/)
 - [https://dl.acm.org/doi/fullHtml/10.1145/3447579](https://dl.acm.org/doi/fullHtml/10.1145/3447579) Article for real life data gathering to use.

@@ -6,6 +6,8 @@ Policies to try
 * Adding/removing squares/roots
 
 Algorithms to try:
+* MQ
+* LIRS
 * LRFU (Done)
 	* Add correlated references version of LRFU
 * ARC
