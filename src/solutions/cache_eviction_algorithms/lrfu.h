@@ -79,11 +79,11 @@ public:
    */
   int GetAvailableLocation();
 
+private:
   static int current_time_;
   static double lambda_; // Lambda LRFU parameter, determines the rate of
                          // exponential decay of the page reference frequency
   static double two_to_the_power_minus_lambda_; // 2^-lambda
-private:
   std::vector<Tenant> tenants_;
   int total_buffer_size_;
   std::queue<int> available_locations_;
