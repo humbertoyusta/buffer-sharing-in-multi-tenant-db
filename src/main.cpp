@@ -9,6 +9,7 @@
 #include "solutions/lru_2_solution.h"
 #include "solutions/lru_policy_1_solution.h"
 #include "solutions/lru_policy_2_solution.h"
+#include "solutions/lru_policy_3_solution.h"
 #include "solutions/mq_solution.h"
 #include <iostream>
 #include <map>
@@ -57,6 +58,8 @@ int main(int argc, char **argv) {
         solution = new LruPolicy1Solution();
       } else if (solution_name == "lru_policy_2_solution") {
         solution = new LruPolicy2Solution();
+      } else if (solution_name == "lru_policy_3_solution") {
+        solution = new LruPolicy3Solution();
       } else if (solution_name == "lfu_policy_1_solution") {
         solution = new LfuPolicy1Solution();
       } else if (solution_name == "lfu_policy_2_solution") {

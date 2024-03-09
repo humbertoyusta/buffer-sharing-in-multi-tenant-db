@@ -62,7 +62,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Extras to add.md",
+                "file": "Articles.md",
                 "mode": "source",
                 "source": false
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Extras to add.md",
+                "file": "Articles.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -167,7 +167,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Extras to add.md",
+                "file": "Articles.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -190,7 +190,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Extras to add.md"
+                "file": "Articles.md"
               }
             }
           }
@@ -213,11 +213,11 @@
   },
   "active": "d33538d059d0650c",
   "lastOpenFiles": [
-    "john doe.md",
+    "Cost function.md",
     "Extras to add.md",
+    "john doe.md",
     "Articles.md",
     "To-do.md",
-    "Cost function.md",
     "Untitled.canvas"
   ]
 }

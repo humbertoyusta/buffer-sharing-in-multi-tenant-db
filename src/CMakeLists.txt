@@ -15,6 +15,7 @@ add_library(src
     solutions/cache_eviction_algorithms/lirs.cpp
     solutions/lru_policy_1_solution.cpp
     solutions/lru_policy_2_solution.cpp
+    solutions/lru_policy_3_solution.cpp
     solutions/lru_2_solution.cpp
     solutions/_2q_solution.cpp
     solutions/lrfu_solution.cpp
