@@ -4,6 +4,7 @@
 #include "solutions/_2q_solution.h"
 #include "solutions/lfu_policy_1_solution.h"
 #include "solutions/lfu_policy_2_solution.h"
+#include "solutions/lirs_solution.h"
 #include "solutions/lrfu_solution.h"
 #include "solutions/lru_2_solution.h"
 #include "solutions/lru_policy_1_solution.h"
@@ -74,6 +75,10 @@ int main(int argc, char **argv) {
     };
   }
 
+  if (solution_name == "lirs_solution") {
+    tune_parameters = {0.8, 0.85, 0.9, 0.95, 0.98};
+  }
+
   auto scorer = Scorer(solution_name, test_type);
   std::vector<TestScore> test_scores;
 
@@ -129,6 +134,8 @@ int main(int argc, char **argv) {
           solution = new MQSolution(int(std::round(tune_parameter)),
                                     second_tune_parameters[i],
                                     third_tune_parameters[i]);
+        } else if (solution_name == "lirs_solution") {
+          solution = new LIRSSolution(tune_parameter);
         } else {
           std::cout << "Solution not tunable, with name: " << solution_name
                     << std::endl;
