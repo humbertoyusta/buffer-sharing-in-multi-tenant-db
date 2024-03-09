@@ -1,0 +1,20 @@
+solution_name: lirs_solution
+tune_parameters:
+  - tune_parameter: 0.80000000000000004
+    mean_fault_score: 0.098524923598922301
+    mean_hit_score: 0.068286077610136969
+  - tune_parameter: 0.84999999999999998
+    mean_fault_score: 0.098524923598922315
+    mean_hit_score: 0.068286077610136969
+  - tune_parameter: 0.90000000000000002
+    mean_fault_score: 0.098524923598922315
+    mean_hit_score: 0.068286077610136969
+  - tune_parameter: 0.94999999999999996
+    mean_fault_score: 0.098524923598922287
+    mean_hit_score: 0.068286077610136969
+  - tune_parameter: 0.97999999999999998
+    mean_fault_score: 0.098524923598922287
+    mean_hit_score: 0.068286077610136969
+best_tune_parameter: 0.94999999999999996
+best_second_tune_parameter: -1
+best_third_tune_parameter: -1
