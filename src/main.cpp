@@ -2,6 +2,7 @@
 #include "input_reader.h"
 #include "scorer.h"
 #include "solutions/_2q_solution.h"
+#include "solutions/belady_solution.h"
 #include "solutions/lfu_policy_1_solution.h"
 #include "solutions/lfu_policy_2_solution.h"
 #include "solutions/lirs_solution.h"
@@ -74,6 +75,8 @@ int main(int argc, char **argv) {
         solution = new MQSolution(7, 0.2, 1.0);
       } else if (solution_name == "lirs_solution") {
         solution = new LIRSSolution(0.95);
+      } else if (solution_name == "belady_solution") {
+        solution = new BeladySolution(page_accesses);
       } else {
         std::cout << "Unknown solution name: " << solution_name << std::endl;
         return 1;
