@@ -37,3 +37,6 @@ target_link_libraries(main src)
 
 add_executable(tuner tuner.cpp)
 target_link_libraries(tuner src)
+
+add_executable(hit_ratio_per_cache_size_exp hit_ratio_per_cache_size_exp.cpp)
+target_link_libraries(hit_ratio_per_cache_size_exp src)
