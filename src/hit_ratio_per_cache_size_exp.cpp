@@ -102,6 +102,8 @@ int main() {
 
       out << YAML::Key << "solutions" << YAML::Value << YAML::BeginSeq;
 
+      TestScore last_test_score;
+
       for (auto solution_metadata : solutions) {
         auto scorer = Scorer(solution_metadata.name, experiment.test_type);
 
@@ -170,8 +172,31 @@ int main() {
 
         out << YAML::EndMap;
 
+        last_test_score = test_score;
+
         delete solution;
       }
+
+      out << YAML::BeginMap;
+      out << YAML::Key << "solution_name" << YAML::Value << "Judge";
+      out << YAML::Key << "fault_score" << YAML::Value << 0;
+      out << YAML::Key << "hit_score" << YAML::Value << 0;
+
+      out << YAML::Key << "solution_hit_ratio_per_tenant" << YAML::Value
+          << YAML::BeginSeq;
+
+      int tenant_index = 0;
+      for (auto hit_ratio : last_test_score.judge_hit_ratio_per_tenant) {
+        ++tenant_index;
+        std::string tenant_name = "tenant_" + std::to_string(tenant_index);
+        out << YAML::BeginMap;
+        out << YAML::Key << tenant_name << YAML::Value << hit_ratio;
+        out << YAML::EndMap;
+      }
+
+      out << YAML::EndSeq;
+
+      out << YAML::EndMap;
 
       out << YAML::EndSeq;
       out << YAML::EndMap;
