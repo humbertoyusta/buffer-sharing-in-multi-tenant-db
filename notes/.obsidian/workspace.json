@@ -62,14 +62,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Articles.md",
+                "file": "To-do.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c83c88ee204bf147",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Other links.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       },
       {
         "id": "f0cdef386a48d8c0",
@@ -150,7 +162,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Articles.md",
+                "file": "Other links.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -167,7 +179,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Articles.md",
+                "file": "Other links.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -190,7 +202,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Articles.md"
+                "file": "Other links.md"
               }
             }
           }
@@ -211,13 +223,14 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "d33538d059d0650c",
+  "active": "c83c88ee204bf147",
   "lastOpenFiles": [
-    "Cost function.md",
-    "Extras to add.md",
-    "john doe.md",
-    "Articles.md",
     "To-do.md",
+    "Other links.md",
+    "Extras to add.md",
+    "Cost function.md",
+    "Articles.md",
+    "john doe.md",
     "Untitled.canvas"
   ]
 }
