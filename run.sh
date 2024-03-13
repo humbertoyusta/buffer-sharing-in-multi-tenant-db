@@ -2,7 +2,17 @@
 
 executable=$1
 
+if [ $# = 1 ]; then
+  ./build/src/$executable
+  exit 0
+fi
+
 sol=$2
+
+if [ $# = 2 ]; then
+  ./build/src/$executable "$sol"
+  exit 0
+fi
 
 test_type=$3
 
