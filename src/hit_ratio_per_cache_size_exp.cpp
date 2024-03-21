@@ -9,6 +9,7 @@
 #include "solutions/lru_2_solution.h"
 #include "solutions/lru_policy_1_solution.h"
 #include "solutions/mq_solution.h"
+#include "solutions/naive_lru_solution.h"
 #include <fstream>
 #include <iostream>
 #include <yaml-cpp/yaml.h>
@@ -31,8 +32,8 @@ struct ExperimentMetadata {
 
 int main() {
   std::vector<SolutionMetadata> solutions = {
-      {"2Q", 1},   {"Belady", 2}, {"LFU", 3}, {"LIRS", 4},
-      {"LRFU", 5}, {"LRU-2", 6},  {"LRU", 7}, {"MQ", 8},
+      {"2Q", 1},    {"Belady", 2}, {"LFU", 3}, {"LIRS", 4},     {"LRFU", 5},
+      {"LRU-2", 6}, {"LRU", 7},    {"MQ", 8},  {"NaiveLRU", 9},
   };
 
   std::vector<ExperimentMetadata> experiments = {
@@ -135,6 +136,9 @@ int main() {
           break;
         case 8:
           solution = new MQSolution(7, 0.2, 1.0);
+          break;
+        case 9:
+          solution = new NaiveLruSolution();
           break;
         }
 
