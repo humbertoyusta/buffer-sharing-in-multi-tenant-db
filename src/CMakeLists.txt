@@ -25,6 +25,7 @@ add_library(src
     solutions/lfu_policy_2_solution.cpp
     solutions/mq_solution.cpp
     solutions/lirs_solution.cpp
+    solutions/naive_lru_solution.cpp
     scorer.cpp
 )
 

@@ -12,6 +12,7 @@
 #include "solutions/lru_policy_2_solution.h"
 #include "solutions/lru_policy_3_solution.h"
 #include "solutions/mq_solution.h"
+#include "solutions/naive_lru_solution.h"
 #include <iostream>
 #include <map>
 #include <string>
@@ -77,6 +78,8 @@ int main(int argc, char **argv) {
         solution = new LIRSSolution(0.95);
       } else if (solution_name == "belady_solution") {
         solution = new BeladySolution(page_accesses);
+      } else if (solution_name == "naive_lru_solution") {
+        solution = new NaiveLruSolution();
       } else {
         std::cout << "Unknown solution name: " << solution_name << std::endl;
         return 1;
