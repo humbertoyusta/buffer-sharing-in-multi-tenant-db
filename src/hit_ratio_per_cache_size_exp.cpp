@@ -30,26 +30,35 @@ struct ExperimentMetadata {
         total_buffer_sizes(total_buffer_sizes) {}
 };
 
-int main() {
+int main(int argc, char **argv) {
+  bool all_priorities_equal = false;
+  if (argc >= 2) {
+    all_priorities_equal = std::string(argv[1]) == "all_priorities_equal";
+  }
+
   std::vector<SolutionMetadata> solutions = {
       {"2Q", 1},    {"Belady", 2}, {"LFU", 3}, {"LIRS", 4},     {"LRFU", 5},
       {"LRU-2", 6}, {"LRU", 7},    {"MQ", 8},  {"NaiveLRU", 9},
   };
 
   std::vector<ExperimentMetadata> experiments = {
-      {"brightkite", 1, {50, 75, 100, 125, 150, 175, 200, 225, 250, 275}},
+      {"brightkite", 3, {50, 75, 100, 125, 150, 175, 200, 225, 250, 275}},
       {"citibike_exp_1",
-       1,
+       2,
        {4000, 8000, 12000, 16000, 20000, 24000, 28000, 32000, 36000, 40000}},
       {"citibike_exp_2",
-       2,
+       3,
        {3000, 6000, 9000, 12000, 15000, 18000, 21000, 24000, 27000, 30000}},
       {"citibike_exp_3",
-       3,
+       4,
        {200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 200}},
   };
 
   std::string filepath = "experiments/hit_ratio_per_cache_size_exp.yaml";
+  if (all_priorities_equal) {
+    filepath =
+        "experiments/hit_ratio_per_cache_size_exp_all_priorities_equal.yaml";
+  }
   YAML::Emitter out;
 
   out << YAML::BeginMap;
@@ -99,6 +108,12 @@ int main() {
         tenant.max_buffer_size = int(round(double(tenant.max_buffer_size) *
                                            buffer_size_conversion_ratio));
         actual_total_buffer_size += tenant.base_buffer_size;
+      }
+
+      if (all_priorities_equal) {
+        for (auto &tenant : tenants) {
+          tenant.priority = 1;
+        }
       }
 
       out << YAML::Key << "solutions" << YAML::Value << YAML::BeginSeq;
