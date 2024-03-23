@@ -34,10 +34,10 @@ int main() {
   };
 
   std::vector<ExperimentMetadata> experiments = {
-      {"brightkite", 1},
-      {"citibike_exp_1", 1},
-      {"citibike_exp_2", 2},
-      {"citibike_exp_3", 3},
+      {"brightkite", 3},
+      {"citibike_exp_1", 2},
+      {"citibike_exp_2", 3},
+      {"citibike_exp_3", 4},
   };
 
   std::string filepath = "experiments/fault_and_hit_ratio_exp.yaml";
