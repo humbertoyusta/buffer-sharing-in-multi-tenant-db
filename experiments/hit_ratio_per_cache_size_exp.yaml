@@ -3312,85 +3312,85 @@ experiment_4:
             - tenant_2: 0.88879069434160551
             - tenant_3: 0.059405940594059403
             - tenant_4: 0.11375661375661375
-    - buffer_size_10: 200
+    - buffer_size_10: 2000
       solutions:
         - solution_name: 2Q
-          fault_score: 0.02190558586709445
-          hit_score: 0.23827544777620568
+          fault_score: 0.33047322477168356
+          hit_score: 0.14775845518610106
           solution_hit_ratio_per_tenant:
-            - tenant_1: 0.19231774235693755
-            - tenant_2: 0.20374041607948981
-            - tenant_3: 0.0099009900990099011
-            - tenant_4: 0.018518518518518517
+            - tenant_1: 0.58518421740266524
+            - tenant_2: 0.880263692168056
+            - tenant_3: 0.059405940594059403
+            - tenant_4: 0.079365079365079361
         - solution_name: Belady
           fault_score: 0
           hit_score: 0
           solution_hit_ratio_per_tenant:
-            - tenant_1: 0.47935719885027439
-            - tenant_2: 0.35729811068383216
+            - tenant_1: 0.72210608831983281
+            - tenant_2: 0.91484940406525428
             - tenant_3: 0.059405940594059403
-            - tenant_4: 0.16137566137566137
+            - tenant_4: 0.20634920634920634
         - solution_name: LFU
-          fault_score: 0.014775490772765607
-          hit_score: 0.17780870321632844
+          fault_score: 0.14229314673218757
+          hit_score: 0.083415321962336586
           solution_hit_ratio_per_tenant:
-            - tenant_1: 0.19702116540371048
-            - tenant_2: 0.20930565839443954
-            - tenant_3: 0.0099009900990099011
-            - tenant_4: 0.026455026455026454
+            - tenant_1: 0.65442905670237783
+            - tenant_2: 0.89901354288580504
+            - tenant_3: 0.059405940594059403
+            - tenant_4: 0.089947089947089942
         - solution_name: LIRS
-          fault_score: 0.026215328786604843
-          hit_score: 0.22008927216992502
+          fault_score: 0.18062458562780082
+          hit_score: 0.11420733422185554
           solution_hit_ratio_per_tenant:
-            - tenant_1: 0.18356414946433239
-            - tenant_2: 0.20063534525998997
-            - tenant_3: 0.0099009900990099011
-            - tenant_4: 0.026455026455026454
+            - tenant_1: 0.64240919780506922
+            - tenant_2: 0.89516803210165519
+            - tenant_3: 0.059405940594059403
+            - tenant_4: 0.076719576719576715
         - solution_name: LRFU
-          fault_score: 0.021688459381348498
-          hit_score: 0.20346607891378418
+          fault_score: 0.13720179844487748
+          hit_score: 0.086280113798354208
           solution_hit_ratio_per_tenant:
-            - tenant_1: 0.18735301802978835
-            - tenant_2: 0.20534072180953974
-            - tenant_3: 0.0099009900990099011
-            - tenant_4: 0.026455026455026454
+            - tenant_1: 0.65704206950614052
+            - tenant_2: 0.89946736092865498
+            - tenant_3: 0.059405940594059403
+            - tenant_4: 0.087301587301587297
         - solution_name: LRU-2
-          fault_score: 0.010970427889284746
-          hit_score: 0.16364717565108838
+          fault_score: 0.15664430296240556
+          hit_score: 0.10381044944914782
           solution_hit_ratio_per_tenant:
-            - tenant_1: 0.20290044421217665
-            - tenant_2: 0.21102538992523945
-            - tenant_3: 0.0099009900990099011
-            - tenant_4: 0.026455026455026454
+            - tenant_1: 0.6512934413378626
+            - tenant_2: 0.89748489263620512
+            - tenant_3: 0.059405940594059403
+            - tenant_4: 0.079365079365079361
         - solution_name: LRU
-          fault_score: 0.028076010414011143
-          hit_score: 0.26091080542506218
+          fault_score: 0.26089794935985222
+          hit_score: 0.12879381933111511
           solution_hit_ratio_per_tenant:
-            - tenant_1: 0.18748366866997648
-            - tenant_2: 0.19705257123749015
-            - tenant_3: 0.0099009900990099011
-            - tenant_4: 0.018518518518518517
+            - tenant_1: 0.6149725633655605
+            - tenant_2: 0.88633052284615566
+            - tenant_3: 0.059405940594059403
+            - tenant_4: 0.079365079365079361
         - solution_name: MQ
-          fault_score: 0.02602344685392885
-          hit_score: 0.25337491801928891
+          fault_score: 0.17914705402495823
+          hit_score: 0.10563454550710878
           solution_hit_ratio_per_tenant:
-            - tenant_1: 0.18918212699242226
-            - tenant_2: 0.19920223565099004
-            - tenant_3: 0.0099009900990099011
-            - tenant_4: 0.018518518518518517
+            - tenant_1: 0.64136399268356414
+            - tenant_2: 0.8954785391836052
+            - tenant_3: 0.059405940594059403
+            - tenant_4: 0.082010582010582006
         - solution_name: NaiveLRU
-          fault_score: 0.030688089352071856
-          hit_score: 0.18988052785793855
+          fault_score: 0.37870772424956339
+          hit_score: 0.085401883780798535
           solution_hit_ratio_per_tenant:
-            - tenant_1: 0.19127253723543244
-            - tenant_2: 0.18262593450689088
-            - tenant_3: 0.0099009900990099011
-            - tenant_4: 0.037037037037037035
+            - tenant_1: 0.6400574862816828
+            - tenant_2: 0.85613968041655719
+            - tenant_3: 0.059405940594059403
+            - tenant_4: 0.10582010582010581
         - solution_name: Judge
           fault_score: 0
           hit_score: 0
           solution_hit_ratio_per_tenant:
-            - tenant_1: 0.21008622942252417
-            - tenant_2: 0.21675782836123916
-            - tenant_3: 0.019801980198019802
-            - tenant_4: 0.03968253968253968
+            - tenant_1: 0.70538280637575124
+            - tenant_2: 0.91260419901115442
+            - tenant_3: 0.059405940594059403
+            - tenant_4: 0.11904761904761904

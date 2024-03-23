@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
        {3000, 6000, 9000, 12000, 15000, 18000, 21000, 24000, 27000, 30000}},
       {"citibike_exp_3",
        4,
-       {200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 200}},
+       {200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000}},
   };
 
   std::string filepath = "experiments/hit_ratio_per_cache_size_exp.yaml";
