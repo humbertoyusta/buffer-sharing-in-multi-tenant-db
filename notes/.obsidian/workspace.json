@@ -74,14 +74,24 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Cost function.md",
+                "file": "Extras to add.md",
                 "mode": "source",
                 "source": false
               }
             }
+          },
+          {
+            "id": "8556161d4b57ec57",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.5.11"
+              }
+            }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       },
       {
         "id": "f0cdef386a48d8c0",
@@ -162,7 +172,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Cost function.md",
+                "file": "Extras to add.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -179,7 +189,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Cost function.md",
+                "file": "Extras to add.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -202,7 +212,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Cost function.md"
+                "file": "Extras to add.md"
               }
             }
           }
@@ -223,11 +233,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "c83c88ee204bf147",
+  "active": "8556161d4b57ec57",
   "lastOpenFiles": [
-    "Extras to add.md",
-    "Cost function.md",
     "Articles.md",
+    "Cost function.md",
+    "Extras to add.md",
     "To-do.md",
     "Other links.md",
     "john doe.md",
