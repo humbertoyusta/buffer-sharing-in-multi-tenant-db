@@ -121,6 +121,13 @@ void _2Q::AddPage(PageAccess page_access, int buffer_location) {
 }
 
 void _2Q::AddPageToA1OutQueue(int tenant_id, int page_id) {
+
+  if (a1_out_maps_[tenant_id - 1].find(page_id) !=
+      a1_out_maps_[tenant_id - 1].end()) {
+    // Page is already in A1 out queue
+    return;
+  }
+
   // Add page to A1 out queue
   a1_out_queue_[tenant_id - 1].push_front(page_id);
   a1_out_maps_[tenant_id - 1][page_id] = a1_out_queue_[tenant_id - 1].begin();
