@@ -152,28 +152,19 @@ void Lru2::MoveLastCorrelatedPageToMain(int tenant_id) {
 void Lru2::InsertToRetainedPages(int page_id, int tenant_id,
                                  int last_accessed_time) {
   auto found = retained_pages_maps_[tenant_id - 1].find(page_id);
-  if (found != retained_pages_maps_[tenant_id - 1].end()) {
-    auto page = *found->second;
-    retained_pages_lists_[tenant_id - 1].erase(found->second);
-    retained_pages_lists_[tenant_id - 1].push_front(
-        {page_id, last_accessed_time});
-    retained_pages_maps_[tenant_id - 1][page_id] =
-        retained_pages_lists_[tenant_id - 1].begin();
-  } else {
-    retained_pages_lists_[tenant_id - 1].push_front(
-        {page_id, last_accessed_time});
-    retained_pages_maps_[tenant_id - 1][page_id] =
-        retained_pages_lists_[tenant_id - 1].begin();
+  retained_pages_lists_[tenant_id - 1].push_front(
+      {page_id, last_accessed_time});
+  retained_pages_maps_[tenant_id - 1][page_id] =
+      retained_pages_lists_[tenant_id - 1].begin();
 
-    if (retained_pages_lists_[tenant_id - 1].size() >
-        retained_period_length_[tenant_id - 1]) {
-      auto page_to_evict_iterator =
-          prev(retained_pages_lists_[tenant_id - 1].end());
-      auto page_to_evict = *page_to_evict_iterator;
+  if (retained_pages_lists_[tenant_id - 1].size() >
+      retained_period_length_[tenant_id - 1]) {
+    auto page_to_evict_iterator =
+        prev(retained_pages_lists_[tenant_id - 1].end());
+    auto page_to_evict = *page_to_evict_iterator;
 
-      retained_pages_maps_[tenant_id - 1].erase(page_to_evict.first);
-      retained_pages_lists_[tenant_id - 1].erase(page_to_evict_iterator);
-    }
+    retained_pages_maps_[tenant_id - 1].erase(page_to_evict.first);
+    retained_pages_lists_[tenant_id - 1].erase(page_to_evict_iterator);
   }
 }
 
