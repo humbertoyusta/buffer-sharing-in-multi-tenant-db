@@ -55,7 +55,7 @@ std::pair<int, bool> MQSolution::AccessPage(PageAccess page_access) {
       ++cache_used_per_tenant_[page_access.tenant_id - 1];
       ++faults_in_solution_[page_access.tenant_id - 1];
 
-      mq_cache_.AdjustQueues();
+      mq_cache_.AdjustQueues(page_access.tenant_id);
       UpdateScore(page_access.tenant_id);
       return {available_location, false};
     }
@@ -91,7 +91,7 @@ std::pair<int, bool> MQSolution::AccessPage(PageAccess page_access) {
     assert(cache_used_per_tenant_[tenant_id_to_evict - 1] >=
            tenants_[tenant_id_to_evict - 1].min_buffer_size);
 
-    mq_cache_.AdjustQueues();
+    mq_cache_.AdjustQueues(page_access.tenant_id);
     UpdateScore(page_access.tenant_id);
     UpdateScore(tenant_id_to_evict);
     return {evicted_page.buffer_location, false};

@@ -8,8 +8,7 @@ MQ::MQ(std::vector<Tenant> tenants, int total_buffer_size, int num_queues,
       num_queues_(num_queues),
       lifetime_length_multiplier_(lifetime_length_multiplier),
       retained_pages_period_length_multiplier_(
-          retained_pages_period_length_multiplier),
-      current_time_(0) {
+          retained_pages_period_length_multiplier) {
 
   while (!available_locations_.empty())
     available_locations_.pop();
@@ -25,6 +24,8 @@ MQ::MQ(std::vector<Tenant> tenants, int total_buffer_size, int num_queues,
   retained_pages_locations_.resize(tenants.size());
   retained_pages_.clear();
   retained_pages_.resize(tenants.size());
+  accesses_per_tenant_.clear();
+  accesses_per_tenant_.resize(tenants.size());
 
   for (int i = 0; i < tenants.size(); ++i) {
     cache_queues_[i].resize(num_queues);
@@ -80,7 +81,8 @@ void MQ::UpdateAccessHistory(PageAccess page_access) {
   cache_queues_[page_access.tenant_id - 1][current_queue].erase(page_iterator);
 
   page.reference_count++;
-  page.expiration_time = current_time_ + lifetimes_[page_access.tenant_id - 1];
+  page.expiration_time = accesses_per_tenant_[page_access.tenant_id - 1] +
+                         lifetimes_[page_access.tenant_id - 1];
 
   int queue_to_move = GetQueueNumberBasedOnReferenceCount(page.reference_count);
 
@@ -103,7 +105,7 @@ void MQ::AddPage(PageAccess page_access, int buffer_location) {
       retained_pages_locations_[page_access.tenant_id - 1].end()) {
     auto retained_page = retained_page_location->second;
 
-    reference_count = retained_page->reference_count;
+    reference_count = retained_page->reference_count + 1;
     queue_to_move = GetQueueNumberBasedOnReferenceCount(reference_count);
 
     retained_pages_locations_[page_access.tenant_id - 1].erase(
@@ -112,7 +114,8 @@ void MQ::AddPage(PageAccess page_access, int buffer_location) {
   }
 
   Page page(page_access.page_id, buffer_location, reference_count,
-            current_time_ + lifetimes_[page_access.tenant_id - 1]);
+            accesses_per_tenant_[page_access.tenant_id - 1] +
+                lifetimes_[page_access.tenant_id - 1]);
 
   cache_queues_[page_access.tenant_id - 1][queue_to_move].push_back(page);
   cache_locations_[page_access.tenant_id - 1][page_access.page_id] = {
@@ -120,17 +123,19 @@ void MQ::AddPage(PageAccess page_access, int buffer_location) {
       prev(cache_queues_[page_access.tenant_id - 1][queue_to_move].end())};
 }
 
-void MQ::AdjustQueues() {
-  current_time_++;
+void MQ::AdjustQueues(int tenant_id_accessed) {
+  accesses_per_tenant_[tenant_id_accessed - 1]++;
 
   for (int tenant = 0; tenant < tenants_.size(); ++tenant) {
     for (int i = 1; i < num_queues_; ++i) {
       if (!cache_queues_[tenant][i].empty() &&
-          cache_queues_[tenant][i].front().expiration_time < current_time_) {
+          cache_queues_[tenant][i].front().expiration_time <
+              accesses_per_tenant_[tenant]) {
         auto page = cache_queues_[tenant][i].front();
         cache_queues_[tenant][i].pop_front();
 
-        page.expiration_time = current_time_ + lifetimes_[tenant];
+        page.expiration_time =
+            accesses_per_tenant_[tenant] + lifetimes_[tenant];
 
         cache_queues_[tenant][i - 1].push_back(page);
         cache_locations_[tenant][page.page_id] = {

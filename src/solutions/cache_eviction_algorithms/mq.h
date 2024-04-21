@@ -83,7 +83,7 @@ public:
    * previous queues if their expiration time has passed, also increasing the
    * current time
    */
-  void AdjustQueues();
+  void AdjustQueues(int tenant_id_accessed);
 
 private:
   /**
@@ -97,7 +97,7 @@ private:
    */
   int GetQueueNumberBasedOnReferenceCount(int reference_count);
 
-  int current_time_{0};
+  std::vector<int> accesses_per_tenant_; // number of accesses per tenant
   int num_queues_; // number of queues (A1, A2, A3, ..., Anum_queues) per tenant
   /** Lifetime of a page, time without being referenced before being moved to
    * the previous queue(A1<-A2<-A3<-...<-Anum_queues), ratio with respect to
