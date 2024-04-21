@@ -150,7 +150,7 @@ int main(int argc, char **argv) {
           solution = new LruPolicy1Solution();
           break;
         case 8:
-          solution = new MQSolution(7, 0.2, 1.0);
+          solution = new MQSolution(7, 0.5, 0.5);
           break;
         case 9:
           solution = new NaiveLruSolution();
