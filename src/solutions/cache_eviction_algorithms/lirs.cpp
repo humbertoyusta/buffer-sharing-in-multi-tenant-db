@@ -72,6 +72,7 @@ LIRS::Page LIRS::EvictPage(int tenant_id) {
 
     lirs_list_[tenant_id - 1].pop_back();
     lirs_locations_[tenant_id - 1].erase(page.page_id);
+    lirs_sizes_[tenant_id - 1]--;
 
     PruneLIRS(tenant_id);
 
@@ -137,6 +138,12 @@ void LIRS::UpdateAccessHistory(PageAccess page_access) {
     hirs_list_[page_access.tenant_id - 1].push_front(page);
     hirs_locations_[page_access.tenant_id - 1][page.page_id] =
         hirs_list_[page_access.tenant_id - 1].begin();
+
+    lirs_list_[page_access.tenant_id - 1].push_front(page);
+    lirs_locations_[page_access.tenant_id - 1][page.page_id] =
+        lirs_list_[page_access.tenant_id - 1].begin();
+
+    PruneLIRS(page_access.tenant_id);
   }
 
   if (ShouldTurnLastLIRPageToHIR(page_access.tenant_id)) {
@@ -204,7 +211,7 @@ void LIRS::PruneLIRS(int tenant_id) {
 }
 
 void LIRS::TurnLastLIRPageToHIR(int tenant_id) {
-  if (lirs_list_[tenant_id - 1].empty() || lirs_sizes_[tenant_id - 1] != 0) {
+  if (lirs_list_[tenant_id - 1].empty() || lirs_sizes_[tenant_id - 1] == 0) {
     return;
   }
 

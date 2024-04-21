@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
       } else if (solution_name == "mq_solution") {
         solution = new MQSolution(7, 0.5, 0.5);
       } else if (solution_name == "lirs_solution") {
-        solution = new LIRSSolution(0.95);
+        solution = new LIRSSolution(0.8);
       } else if (solution_name == "belady_solution") {
         solution = new BeladySolution(page_accesses);
       } else if (solution_name == "naive_lru_solution") {

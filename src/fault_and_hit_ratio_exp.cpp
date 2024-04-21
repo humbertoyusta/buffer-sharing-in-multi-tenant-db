@@ -89,7 +89,7 @@ int main() {
         solution = new LfuPolicy1Solution();
         break;
       case 4:
-        solution = new LIRSSolution(0.95);
+        solution = new LIRSSolution(0.8);
         break;
       case 5:
         solution = new LRFUSolution(0.0001);

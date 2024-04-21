@@ -1,31 +1,31 @@
 solution_name: lirs_solution
-mean_fault_score: 0.023608340517853401
-mean_hit_score: 0.016359244145083555
+mean_fault_score: 0.018699434759438055
+mean_hit_score: 0.012665123018079196
 test_cases:
   - test_number: 1
-    fault_score: 0.10389606018286619
-    hit_score: 0.068249141167652433
+    fault_score: 0.087506613811013156
+    hit_score: 0.057322978591974182
     tenants:
       - tenant_id: 1
-        fault_score: 0.084624553039332542
-        hit_score: 0.056304520222045996
+        fault_score: 0.079856972586412389
+        hit_score: 0.053132434575733543
         judge_hit_ratio: 0.6004761904761905
-        solution_hit_ratio: 0.56666666666666665
+        solution_hit_ratio: 0.56857142857142862
       - tenant_id: 2
-        fault_score: 0.11004126547455295
-        hit_score: 0.058266569555717407
+        fault_score: 0.08940852819807428
+        hit_score: 0.047341587764020393
         judge_hit_ratio: 0.65380952380952384
-        solution_hit_ratio: 0.61571428571428577
+        solution_hit_ratio: 0.62285714285714289
       - tenant_id: 3
-        fault_score: 0.12197686645636173
-        hit_score: 0.10095735422106179
+        fault_score: 0.096740273396424811
+        hit_score: 0.080069625761531774
         judge_hit_ratio: 0.54714285714285715
-        solution_hit_ratio: 0.4919047619047619
+        solution_hit_ratio: 0.5033333333333333
       - tenant_id: 4
-        fault_score: 0.087765957446808512
-        hit_score: 0.048961424332344211
+        fault_score: 0.074468085106382975
+        hit_score: 0.041543026706231452
         judge_hit_ratio: 0.64190476190476187
-        solution_hit_ratio: 0.61047619047619051
+        solution_hit_ratio: 0.61523809523809525
   - test_number: 2
     fault_score: 0
     hit_score: 0
@@ -34,175 +34,175 @@ test_cases:
         fault_score: 0
         hit_score: 0
         judge_hit_ratio: 0.51266586248492163
-        solution_hit_ratio: 0.55186972255729794
+        solution_hit_ratio: 0.55488540410132692
       - tenant_id: 2
         fault_score: 0
         hit_score: 0
         judge_hit_ratio: 0.59333333333333338
-        solution_hit_ratio: 0.59380952380952379
+        solution_hit_ratio: 0.59857142857142853
       - tenant_id: 3
         fault_score: 0
         hit_score: 0
         judge_hit_ratio: 0.64571428571428569
-        solution_hit_ratio: 0.6461904761904762
+        solution_hit_ratio: 0.65142857142857147
       - tenant_id: 4
         fault_score: 0
         hit_score: 0
         judge_hit_ratio: 0.69999999999999996
-        solution_hit_ratio: 0.70047619047619047
+        solution_hit_ratio: 0.70952380952380956
   - test_number: 3
-    fault_score: 0.00051269093063689675
-    hit_score: 0.0014167910663836828
+    fault_score: 0
+    hit_score: 0
     tenants:
       - tenant_id: 1
         fault_score: 0
         hit_score: 0
         judge_hit_ratio: 0.38523809523809521
-        solution_hit_ratio: 0.39190476190476192
+        solution_hit_ratio: 0.38857142857142857
       - tenant_id: 2
-        fault_score: 0.0019455252918287938
-        hit_score: 0.0053763440860215058
+        fault_score: 0
+        hit_score: 0
         judge_hit_ratio: 0.26571428571428574
-        solution_hit_ratio: 0.26428571428571429
+        solution_hit_ratio: 0.26714285714285713
       - tenant_id: 3
         fault_score: 0
         hit_score: 0
         judge_hit_ratio: 0.67238095238095241
-        solution_hit_ratio: 0.70666666666666667
+        solution_hit_ratio: 0.70619047619047615
       - tenant_id: 4
         fault_score: 0
         hit_score: 0
         judge_hit_ratio: 0.74761904761904763
-        solution_hit_ratio: 0.78809523809523807
+        solution_hit_ratio: 0.79047619047619044
       - tenant_id: 5
         fault_score: 0
         hit_score: 0
         judge_hit_ratio: 0.63904761904761909
-        solution_hit_ratio: 0.64095238095238094
+        solution_hit_ratio: 0.6428571428571429
   - test_number: 4
-    fault_score: 0.0048547543651684495
-    hit_score: 0.0047674888567997859
+    fault_score: 0.0018727693444165706
+    hit_score: 0.0018197088600375442
     tenants:
       - tenant_id: 1
         fault_score: 0
         hit_score: 0
         judge_hit_ratio: 0.6852380952380952
-        solution_hit_ratio: 0.68619047619047624
+        solution_hit_ratio: 0.68809523809523809
       - tenant_id: 2
         fault_score: 0
         hit_score: 0
         judge_hit_ratio: 0.58121432278152574
-        solution_hit_ratio: 0.58380902957965752
+        solution_hit_ratio: 0.58484691229891017
       - tenant_id: 3
-        fault_score: 0.0087281795511221939
-        hit_score: 0.010028653295128941
+        fault_score: 0.0024937655860349127
+        hit_score: 0.0028653295128939827
         judge_hit_ratio: 0.46533333333333332
-        solution_hit_ratio: 0.46066666666666667
+        solution_hit_ratio: 0.46400000000000002
       - tenant_id: 4
-        fault_score: 0.0056053811659192822
-        hit_score: 0.005434782608695652
+        fault_score: 0.0033632286995515697
+        hit_score: 0.0032608695652173911
         judge_hit_ratio: 0.50772626931567333
-        solution_hit_ratio: 0.50496688741721851
+        solution_hit_ratio: 0.50607064017660042
       - tenant_id: 5
-        fault_score: 0.0072028811524609843
-        hit_score: 0.0057692307692307696
+        fault_score: 0.0024009603841536613
+        hit_score: 0.0019230769230769232
         judge_hit_ratio: 0.55525894287239719
-        solution_hit_ratio: 0.55205552589428719
+        solution_hit_ratio: 0.55419113721302726
   - test_number: 5
-    fault_score: 0.024187031791909955
-    hit_score: 0.017624926012300986
+    fault_score: 0.019280915967337057
+    hit_score: 0.014106634194800344
     tenants:
       - tenant_id: 1
-        fault_score: 0.015276145710928319
-        hit_score: 0.010408326661329063
+        fault_score: 0.011750881316098707
+        hit_score: 0.0080064051240992789
         judge_hit_ratio: 0.59476190476190471
-        solution_hit_ratio: 0.58857142857142852
+        solution_hit_ratio: 0.58999999999999997
       - tenant_id: 2
-        fault_score: 0.01090909090909091
-        hit_score: 0.007058823529411765
+        fault_score: 0.014545454545454545
+        hit_score: 0.0094117647058823521
         judge_hit_ratio: 0.6071428571428571
-        solution_hit_ratio: 0.60285714285714287
+        solution_hit_ratio: 0.60142857142857142
       - tenant_id: 3
-        fault_score: 0.041366906474820143
-        hit_score: 0.046558704453441298
+        fault_score: 0.03237410071942446
+        hit_score: 0.03643724696356275
         judge_hit_ratio: 0.47047619047619049
-        solution_hit_ratio: 0.44857142857142857
+        solution_hit_ratio: 0.45333333333333331
       - tenant_id: 4
-        fault_score: 0.04046242774566474
-        hit_score: 0.019886363636363636
+        fault_score: 0.027456647398843931
+        hit_score: 0.013494318181818182
         judge_hit_ratio: 0.67047619047619045
-        solution_hit_ratio: 0.65714285714285714
+        solution_hit_ratio: 0.66142857142857148
       - tenant_id: 5
-        fault_score: 0
-        hit_score: 0
+        fault_score: 0.0025608194622279128
+        hit_score: 0.0015163002274450341
         judge_hit_ratio: 0.62809523809523804
-        solution_hit_ratio: 0.62952380952380949
+        solution_hit_ratio: 0.62714285714285711
       - tenant_id: 6
-        fault_score: 0.040897097625329816
-        hit_score: 0.023099850968703428
+        fault_score: 0.030343007915567283
+        hit_score: 0.017138599105812221
         judge_hit_ratio: 0.63904761904761909
-        solution_hit_ratio: 0.62428571428571433
+        solution_hit_ratio: 0.62809523809523804
       - tenant_id: 7
         fault_score: 0
         hit_score: 0
         judge_hit_ratio: 0.41989987484355445
-        solution_hit_ratio: 0.42240300375469336
+        solution_hit_ratio: 0.4449311639549437
       - tenant_id: 8
-        fault_score: 0.015645371577574969
-        hit_score: 0.011059907834101382
+        fault_score: 0.011734028683181226
+        hit_score: 0.0082949308755760377
         judge_hit_ratio: 0.58585313174946008
-        solution_hit_ratio: 0.57937365010799136
+        solution_hit_ratio: 0.58099352051835851
   - test_number: 6
-    fault_score: 0.0081995058365388947
-    hit_score: 0.0060971177673644437
+    fault_score: 0.0035363094338615501
+    hit_score: 0.0027414164616631027
     tenants:
       - tenant_id: 1
-        fault_score: 0.0041884816753926706
-        hit_score: 0.0034934497816593887
+        fault_score: 0.0020942408376963353
+        hit_score: 0.0017467248908296944
         judge_hit_ratio: 0.54523809523809519
-        solution_hit_ratio: 0.54333333333333333
+        solution_hit_ratio: 0.54428571428571426
       - tenant_id: 2
-        fault_score: 0.0067873303167420816
-        hit_score: 0.008658008658008658
+        fault_score: 0.0033936651583710408
+        hit_score: 0.004329004329004329
         judge_hit_ratio: 0.4394419784400761
-        solution_hit_ratio: 0.43563728598604945
+        solution_hit_ratio: 0.4375396322130628
       - tenant_id: 3
-        fault_score: 0.0090791180285343717
-        hit_score: 0.011254019292604502
+        fault_score: 0.0077821011673151752
+        hit_score: 0.0096463022508038593
         judge_hit_ratio: 0.44651830581478824
-        solution_hit_ratio: 0.44149318018664752
+        solution_hit_ratio: 0.44221105527638194
       - tenant_id: 4
-        fault_score: 0.0064220183486238536
-        hit_score: 0.0069306930693069308
+        fault_score: 0
+        hit_score: 0
         judge_hit_ratio: 0.48095238095238096
-        solution_hit_ratio: 0.47761904761904761
+        solution_hit_ratio: 0.48095238095238096
       - tenant_id: 5
-        fault_score: 0.0075046904315196998
-        hit_score: 0.0027472527472527475
+        fault_score: 0.0037523452157598499
+        hit_score: 0.0013736263736263737
         judge_hit_ratio: 0.73202614379084963
-        solution_hit_ratio: 0.73001508295625939
+        solution_hit_ratio: 0.73102061337355451
       - tenant_id: 6
-        fault_score: 0.0060790273556231003
-        hit_score: 0.0027739251040221915
+        fault_score: 0
+        hit_score: 0
         judge_hit_ratio: 0.68666666666666665
-        solution_hit_ratio: 0.68476190476190479
+        solution_hit_ratio: 0.68666666666666665
       - tenant_id: 7
-        fault_score: 0.0081168831168831161
-        hit_score: 0.0033692722371967657
+        fault_score: 0.00487012987012987
+        hit_score: 0.0020215633423180594
         judge_hit_ratio: 0.70666666666666667
-        solution_hit_ratio: 0.70428571428571429
+        solution_hit_ratio: 0.70523809523809522
       - tenant_id: 8
-        fault_score: 0.0091116173120728925
-        hit_score: 0.0024081878386514148
+        fault_score: 0.0022779043280182231
+        hit_score: 0.0006020469596628537
         judge_hit_ratio: 0.79095238095238096
-        solution_hit_ratio: 0.789047619047619
+        solution_hit_ratio: 0.79047619047619044
       - tenant_id: 9
-        fault_score: 0.0083246618106139446
-        hit_score: 0.0070237050043898156
+        fault_score: 0.0020811654526534861
+        hit_score: 0.0017559262510974539
         judge_hit_ratio: 0.54238095238095241
-        solution_hit_ratio: 0.53857142857142859
+        solution_hit_ratio: 0.54142857142857148
       - tenant_id: 10
-        fault_score: 0.0018484288354898336
-        hit_score: 0.00079428117553613975
+        fault_score: 0.0036968576709796672
+        hit_score: 0.0015885623510722795
         judge_hit_ratio: 0.69944444444444442
-        solution_hit_ratio: 0.69888888888888889
+        solution_hit_ratio: 0.69833333333333336

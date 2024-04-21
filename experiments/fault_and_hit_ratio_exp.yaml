@@ -30,14 +30,14 @@ experiment_1:
         - tenant_4: 0.7790476190476191
         - tenant_5: 0.62142857142857144
     - solution_name: LIRS
-      fault_score: 0.00051269093063689675
-      hit_score: 0.0014167910663836828
+      fault_score: 0
+      hit_score: 0
       solution_hit_ratio_per_tenant:
-        - tenant_1: 0.39190476190476192
-        - tenant_2: 0.26428571428571429
-        - tenant_3: 0.70666666666666667
-        - tenant_4: 0.78809523809523807
-        - tenant_5: 0.64095238095238094
+        - tenant_1: 0.38857142857142857
+        - tenant_2: 0.26714285714285713
+        - tenant_3: 0.70619047619047615
+        - tenant_4: 0.79047619047619044
+        - tenant_5: 0.6428571428571429
     - solution_name: LRFU
       fault_score: 0.020151466291212772
       hit_score: 0.029241370892515287
@@ -124,10 +124,10 @@ experiment_2:
       fault_score: 0
       hit_score: 0
       solution_hit_ratio_per_tenant:
-        - tenant_1: 0.2053126286419979
-        - tenant_2: 0.34397995419153155
-        - tenant_3: 0.18260782747603835
-        - tenant_4: 0.20630194764917503
+        - tenant_1: 0.20139047706170243
+        - tenant_2: 0.34821801658113583
+        - tenant_3: 0.17947949946751865
+        - tenant_4: 0.20298793130947951
     - solution_name: LRFU
       fault_score: 0.038003625943811445
       hit_score: 0.13569684702621196
@@ -205,13 +205,13 @@ experiment_3:
         - tenant_3: 0.18744845785914563
         - tenant_4: 0.25445578819865028
     - solution_name: LIRS
-      fault_score: 0.0011781493378571657
-      hit_score: 0.0044584594578242409
+      fault_score: 0.0008920194170456031
+      hit_score: 0.0025300247664866294
       solution_hit_ratio_per_tenant:
-        - tenant_1: 0.42803806664549715
-        - tenant_2: 0.58794023081966462
-        - tenant_3: 0.18250041233712683
-        - tenant_4: 0.2421410855395974
+        - tenant_1: 0.42736449101738788
+        - tenant_2: 0.58700687420013342
+        - tenant_3: 0.18365495629226455
+        - tenant_4: 0.24297744707850263
     - solution_name: LRFU
       fault_score: 0.069858909062406882
       hit_score: 0.15211585632017185
@@ -289,13 +289,13 @@ experiment_4:
         - tenant_3: 0.059405940594059403
         - tenant_4: 0.071428571428571425
     - solution_name: LIRS
-      fault_score: 0.097504959427791776
-      hit_score: 0.12376623216272602
+      fault_score: 0.10239413543266471
+      hit_score: 0.10516045851719302
       solution_hit_ratio_per_tenant:
-        - tenant_1: 0.54206950614058014
-        - tenant_2: 0.77600496811331121
+        - tenant_1: 0.53867258949568853
+        - tenant_2: 0.77414192562161133
         - tenant_3: 0.059405940594059403
-        - tenant_4: 0.058201058201058198
+        - tenant_4: 0.068783068783068779
     - solution_name: LRFU
       fault_score: 0.05379632271442826
       hit_score: 0.077770782476113201
